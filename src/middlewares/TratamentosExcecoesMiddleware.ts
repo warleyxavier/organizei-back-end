@@ -1,10 +1,8 @@
-import { Service } from "typedi";
 import { Middleware, ExpressErrorMiddlewareInterface, } from "routing-controllers";
 
 import { EBaseException } from "../core/exception/BaseException";
 import FalhaRequisicao from "../core/dto/FalhaRequisicao";
 
-@Service()
 @Middleware({ type: "after" })
 export class TratamentoExcecoesMiddleware implements ExpressErrorMiddlewareInterface {
 	error(error: any, request: any, response: any, next: (err?: any) => any): void {

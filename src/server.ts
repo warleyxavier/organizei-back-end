@@ -2,6 +2,8 @@ require("dotenv").config();
 
 import "reflect-metadata";
 
+import "./core/config/InjectImports";
+
 import app from "./core/config/ServidorHTTP";
 import conectorBancoDados from "./core/config/ConfiguradorConexaoBancoDados";
 

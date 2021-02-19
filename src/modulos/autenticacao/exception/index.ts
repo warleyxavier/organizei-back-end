@@ -1,0 +1,1 @@
+export { EUsuarioJaRegistradoException } from "./UsuarioJaRegistradoException";
