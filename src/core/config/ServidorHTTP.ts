@@ -5,8 +5,11 @@ import { TratamentoExcecoesMiddleware } from "../../middlewares/TratamentosExcec
 
 const app = createExpressServer({
 	defaultErrorHandler: false,
-	controllers: [__dirname + "/../controllers/*.{ts,js}"],
-	middlewares: [TratamentoExcecoesMiddleware]
+	controllers: [__dirname + "/../../controllers/*.{ts,js}"],
+	middlewares: [TratamentoExcecoesMiddleware],
+	defaults: {
+		undefinedResultCode: 200
+	}
 });
 
 app.use(json());
