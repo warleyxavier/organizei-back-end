@@ -5,5 +5,6 @@ export default interface IUsuario {
   Senha: string;
 
   atualizarSenha(senha: string): void;
+  possuiASenha(senha: string): boolean;
   
 }

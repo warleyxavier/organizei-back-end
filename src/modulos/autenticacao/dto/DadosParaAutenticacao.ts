@@ -1,9 +1,6 @@
 import { IsEmail, IsNotEmpty, MinLength } from "class-validator";
 
-export default class {
-
-  @IsNotEmpty({message: "O nomeCompleto não foi informado"})
-  nomeCompleto: string;
+export default class DadosParaAutenticacao {
 
   @IsNotEmpty({ message: "O Email não foi informado" })
   @IsEmail({}, {message: "O Email informado não é válido"})
@@ -12,5 +9,4 @@ export default class {
   @IsNotEmpty({ message: "A senha não foi informada" })
   @MinLength(6, { message: "A senha deve possuir no mínimo 6 caracteres" })
   senha: string;
-
 }

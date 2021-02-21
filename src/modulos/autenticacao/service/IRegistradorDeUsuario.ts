@@ -1,5 +1,5 @@
-import DadosDeRegistroDto from "../dto/DadosDeRegistroDto";
+import IUsuario from "../../common/entity/IUsuario";
 
 export default interface IRegistradorDeUsuario {
-  registrar(dadosRegistro: DadosDeRegistroDto): Promise<void>;
+  registrar(usuario: IUsuario): Promise<void>;
 }
