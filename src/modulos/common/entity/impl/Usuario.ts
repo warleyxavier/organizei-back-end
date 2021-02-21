@@ -26,7 +26,15 @@ export default class Usuario implements IUsuario {
   }
 
   public atualizarSenha(senha: string): void {
-    this.senha = md5(senha);
+    this.senha = this.criptografarSenha(senha);
+  }
+
+  public possuiASenha(senha: string): boolean {
+    return this.senha.includes(this.criptografarSenha(senha));
+  }
+
+  private criptografarSenha(senha: string): string {
+    return md5(senha);
   }
 
 }

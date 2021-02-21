@@ -1,4 +1,5 @@
 import { Inject, Service } from "typedi";
+import { threadId } from "worker_threads";
 
 import IConexao from "../../../../core/config/IConexao";
 
@@ -15,6 +16,10 @@ export default class UsuarioRepository implements IUsuarioRepository {
 
   public async existeUsuarioComOEmail(email: string): Promise<boolean> {
     return await this.conexao.getGerenciador().count(Usuario, {where: {EMail: email}}) > 0;
+  }
+
+  public async pesquisarPorEmail(email: string): Promise<IUsuario> {
+    return await this.conexao.getGerenciador().findOne(Usuario, {where: {EMail: email}});
   }
 
   public async inserir(usuario: IUsuario): Promise<void> {
