@@ -5,7 +5,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 import IUsuario from "../IUsuario";
 
-@Service("common.usuario")
+@Service("usuario")
 @Entity("usuarios")
 export default class Usuario implements IUsuario {
 

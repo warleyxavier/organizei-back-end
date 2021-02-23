@@ -1,15 +1,15 @@
 import { Inject, Service } from "typedi";
 
-import IUsuario from "../../../common/entity/IUsuario";
+import IUsuario from "../../entities/IUsuario";
 
 import IUsuarioRepository from "../../repository/IUsuarioRepository";
 import { EUsuarioJaRegistradoException } from "../../exception";
 import IRegistradorDeUsuario from "../IRegistradorDeUsuario";
 
-@Service("autenticacao.registradorUsuario")
+@Service("usuario.registradorUsuario")
 export default class RegistradorDeUsuario implements IRegistradorDeUsuario{
   
-  @Inject("autenticacao.usuarioRepository")
+  @Inject("usuario.usuarioRepository")
   private usuarioRepository: IUsuarioRepository;
   
   public async registrar(usuario: IUsuario): Promise<void> {    

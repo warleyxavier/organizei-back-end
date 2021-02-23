@@ -3,12 +3,12 @@ import { threadId } from "worker_threads";
 
 import IConexao from "../../../../core/config/IConexao";
 
-import Usuario from "../../../common/entity/impl/Usuario";
-import IUsuario from "../../../common/entity/IUsuario";
+import Usuario from "../../entities/impl/Usuario";
+import IUsuario from "../../entities/IUsuario";
 
 import IUsuarioRepository from "../IUsuarioRepository";
 
-@Service("autenticacao.usuarioRepository")
+@Service("usuario.usuarioRepository")
 export default class UsuarioRepository implements IUsuarioRepository {
 
   @Inject("conexao")
