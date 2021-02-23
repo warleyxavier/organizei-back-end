@@ -1,4 +1,4 @@
-import IUsuario from "modulos/common/entity/IUsuario";
+import IUsuario from "modulos/usuario/entities/IUsuario";
 
 export default interface IUsuarioRepository {
   existeUsuarioComOEmail(email: string): Promise<boolean>;

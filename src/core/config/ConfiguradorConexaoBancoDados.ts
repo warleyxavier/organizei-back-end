@@ -9,7 +9,7 @@ const conectorBancoDados = async () => {
         port: parseInt(process.env.BANCO_DADOS_PORTA),
         username: process.env.BANCO_DADOS_USUARIO,
         password: process.env.BANCO_DADOS_SENHA,
-        entities: [__dirname + "/../../modulos/**/entity/**/impl/*{.ts,.js}"],
+        entities: [__dirname + "/../../modulos/**/entities/**/impl/*{.ts,.js}"],
         dropSchema: false,
         synchronize: false,
         logging: "all"

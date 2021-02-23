@@ -1,13 +1,13 @@
 import Container, { Service } from "typedi";
 
-import IUsuario from "../../common/entity/IUsuario";
 import DadosDeRegistroDto from "../dto/DadosDeRegistroDto";
+import IUsuario from "../entities/IUsuario";
 
-@Service("autenticacao.mapeadorDeUsuario")
+@Service("usuario.mapeadorDeUsuario")
 export default class MapeadorDeUsuario {
 
   public paraEntidade(dto: DadosDeRegistroDto): IUsuario {
-    let usuario = Container.get<IUsuario>("common.usuario");
+    let usuario = Container.get<IUsuario>("usuario");
     usuario.EMail = dto.email;
     usuario.NomeCompleto = dto.nomeCompleto;
     usuario.atualizarSenha(dto.senha);

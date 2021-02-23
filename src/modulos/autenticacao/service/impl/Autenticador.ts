@@ -2,7 +2,7 @@ import { Inject, Service } from "typedi";
 
 import AccessToken from "../../dto/AccessToken";
 import { SenhaIncorretaUsuario, UsuarioNaoEncontradoException } from "../../exception";
-import IUsuarioRepository from "../../repository/IUsuarioRepository";
+import IUsuarioRepository from "../../../usuario/repository/IUsuarioRepository";
 
 import IAutenticador from "../IAutenticador";
 import IGeradorAccessToken from "../IGeradorAccessToken";
@@ -10,7 +10,7 @@ import IGeradorAccessToken from "../IGeradorAccessToken";
 @Service("autenticacao.autenticador")
 export default class Autenticador implements IAutenticador {
 
-  @Inject("autenticacao.usuarioRepository")
+  @Inject("usuario.usuarioRepository")
   private usuarioRepository: IUsuarioRepository;
 
   @Inject("autenticacao.geradorJWTAccessToken")
