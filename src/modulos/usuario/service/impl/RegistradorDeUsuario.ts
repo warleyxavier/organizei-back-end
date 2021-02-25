@@ -2,19 +2,27 @@ import { Inject, Service } from "typedi";
 
 import IUsuario from "../../entities/IUsuario";
 
+import IAcaoPosRegistroUsuarioCommand from "../../commands/IAcaoPosRegistroUsuarioCommand";
 import IUsuarioRepository from "../../repository/IUsuarioRepository";
 import { EUsuarioJaRegistradoException } from "../../exception";
 import IRegistradorDeUsuario from "../IRegistradorDeUsuario";
 
-@Service("usuario.registradorUsuario")
+@Service({id: "usuario.registradorUsuario", transient: true})
 export default class RegistradorDeUsuario implements IRegistradorDeUsuario{
   
   @Inject("usuario.usuarioRepository")
   private usuarioRepository: IUsuarioRepository;
+
+  private acoesPosRegistro: IAcaoPosRegistroUsuarioCommand[] = [];
   
-  public async registrar(usuario: IUsuario): Promise<void> {    
+  public adicionarAcaoPosRegistro(acao: IAcaoPosRegistroUsuarioCommand): void {
+    this.acoesPosRegistro.push(acao);
+  }
+
+  public async registrar(usuario: IUsuario): Promise<void> {      
     await this.validarSeUsuarioJaEstaRegistrado(usuario.EMail);
-    this.usuarioRepository.inserir(usuario);  
+    const usuarioSalvo = await this.usuarioRepository.inserir(usuario);  
+    await this.executarAcoesPosRegistro(usuarioSalvo);
   }
 
   private async validarSeUsuarioJaEstaRegistrado(email: string): Promise<void> {
@@ -24,6 +32,10 @@ export default class RegistradorDeUsuario implements IRegistradorDeUsuario{
       return;
 
     throw new EUsuarioJaRegistradoException(email);
+  }
+
+  private async executarAcoesPosRegistro(usuario: IUsuario): Promise<void> {
+    await this.acoesPosRegistro.forEach(async acao => await acao.executar(usuario));
   }
 
 }

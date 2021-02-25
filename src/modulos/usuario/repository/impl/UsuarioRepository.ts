@@ -1,5 +1,4 @@
 import { Inject, Service } from "typedi";
-import { threadId } from "worker_threads";
 
 import IConexao from "../../../../core/config/IConexao";
 
@@ -8,7 +7,7 @@ import IUsuario from "../../entities/IUsuario";
 
 import IUsuarioRepository from "../IUsuarioRepository";
 
-@Service("usuario.usuarioRepository")
+@Service({id: "usuario.usuarioRepository", transient: true})
 export default class UsuarioRepository implements IUsuarioRepository {
 
   @Inject("conexao")
@@ -22,8 +21,8 @@ export default class UsuarioRepository implements IUsuarioRepository {
     return await this.conexao.getGerenciador().findOne(Usuario, {where: {EMail: email}});
   }
 
-  public async inserir(usuario: IUsuario): Promise<void> {
-    await this.conexao.getGerenciador().insert(Usuario, usuario);
+  public async inserir(usuario: IUsuario): Promise<IUsuario> {
+    return await this.conexao.getGerenciador().save(Usuario, usuario, {});
   }
 
 }
