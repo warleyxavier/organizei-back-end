@@ -3,7 +3,7 @@ import Container, { Service } from "typedi";
 import DadosDeRegistroDto from "../dto/DadosDeRegistroDto";
 import IUsuario from "../entities/IUsuario";
 
-@Service("usuario.mapeadorDeUsuario")
+@Service({id: "usuario.mapeadorDeUsuario", transient: true})
 export default class MapeadorDeUsuario {
 
   public paraEntidade(dto: DadosDeRegistroDto): IUsuario {

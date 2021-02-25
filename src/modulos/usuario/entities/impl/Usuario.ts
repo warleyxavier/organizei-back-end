@@ -1,11 +1,10 @@
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Service, ServiceMetadata } from "typedi";
 import * as md5 from "md5";
-
-import { Service } from "typedi";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 import IUsuario from "../IUsuario";
 
-@Service("usuario")
+@Service({id: "usuario", transient: true})
 @Entity("usuarios")
 export default class Usuario implements IUsuario {
 
@@ -21,7 +20,7 @@ export default class Usuario implements IUsuario {
   @Column({name: "senha"})
   private senha: string;
 
-  get Senha():string {
+  public get Senha():string {
     return this.senha;
   }
 

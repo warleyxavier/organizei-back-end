@@ -7,7 +7,7 @@ import IUsuarioRepository from "../../../usuario/repository/IUsuarioRepository";
 import IAutenticador from "../IAutenticador";
 import IGeradorAccessToken from "../IGeradorAccessToken";
 
-@Service("autenticacao.autenticador")
+@Service({id: "autenticacao.autenticador", transient: true})
 export default class Autenticador implements IAutenticador {
 
   @Inject("usuario.usuarioRepository")
