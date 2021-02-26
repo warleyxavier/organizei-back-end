@@ -1,7 +1,7 @@
 import { Inject, Service } from "typedi";
 
 import AccessToken from "../../dto/AccessToken";
-import { SenhaIncorretaUsuario, UsuarioNaoEncontradoException } from "../../exception";
+import { ESenhaIncorretaUsuario, EUsuarioNaoEncontradoException } from "../../exception";
 import IUsuarioRepository from "../../../usuario/repository/IUsuarioRepository";
 
 import IAutenticador from "../IAutenticador";
@@ -20,10 +20,10 @@ export default class Autenticador implements IAutenticador {
     const usuario = await this.usuarioRepository.pesquisarPorEmail(email);
 
     if (!usuario)
-      throw new UsuarioNaoEncontradoException(email);
+      throw new EUsuarioNaoEncontradoException(email);
 
     if (!usuario.possuiASenha(senha))
-      throw new SenhaIncorretaUsuario();
+      throw new ESenhaIncorretaUsuario();
 
     const accessToken: string = this.geradorAccessToken.gerar(usuario.Codigo);
 
