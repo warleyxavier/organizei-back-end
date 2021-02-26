@@ -1,4 +1,4 @@
-import { Body, JsonController, Post, Req, UseBefore } from "routing-controllers";
+import { Body, HttpCode, JsonController, Post, Req, UseBefore } from "routing-controllers";
 import Container from "typedi";
 
 import AutenticacaoMiddleware from "../../../middlewares/AutenticacaoMiddleware";
@@ -21,6 +21,7 @@ export default class CategoriaController {
   }
 
   @Post("/")
+  @HttpCode(201)
   public async criar(@Req() request: any, @Body() categoriaParInsercao: CategoriaParaInsercaoDto): Promise<CategoriaAlteradaDto> { 
     let { codigoUsuario } = request;
     let categoria = this.mapeadorDeCategoria.paraEntidade(categoriaParInsercao);
