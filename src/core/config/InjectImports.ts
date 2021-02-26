@@ -8,6 +8,7 @@ import "../../modulos/usuario/commands/impl/CriadorContaPrincipalUsuarioCommand"
 
 import "../../modulos/autenticacao/service/impl/GeradorJWTAccessTokens";
 import "../../modulos/autenticacao/service/impl/Autenticador";
+import "../../modulos/autenticacao/service/impl/ValidadorJWTAccessToken";
 
 import "../../modulos/financeiro/entities/impl/Conta";
 import "../../modulos/financeiro/repositories/impl/ContaRepository";
