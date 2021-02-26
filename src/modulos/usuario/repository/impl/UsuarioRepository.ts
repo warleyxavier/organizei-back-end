@@ -17,6 +17,10 @@ export default class UsuarioRepository implements IUsuarioRepository {
     return await this.conexao.getGerenciador().count(Usuario, {where: {EMail: email}}) > 0;
   }
 
+  public async pesquisarPorCodigo(codigo: number): Promise<IUsuario> {
+    return await this.conexao.getGerenciador().findOne(Usuario, codigo);
+  }
+
   public async pesquisarPorEmail(email: string): Promise<IUsuario> {
     return await this.conexao.getGerenciador().findOne(Usuario, {where: {EMail: email}});
   }

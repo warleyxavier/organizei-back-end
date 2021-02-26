@@ -11,4 +11,7 @@ import "../../modulos/autenticacao/service/impl/Autenticador";
 import "../../modulos/autenticacao/service/impl/ValidadorJWTAccessToken";
 
 import "../../modulos/financeiro/entities/impl/Conta";
+import "../../modulos/financeiro/entities/impl/Categoria";
 import "../../modulos/financeiro/repositories/impl/ContaRepository";
+import "../../modulos/financeiro/repositories/impl/CategoriaRepository";
+import "../../modulos/financeiro/service/impl/GerenciadorCategoria";
