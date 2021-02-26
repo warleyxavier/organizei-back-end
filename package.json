@@ -8,6 +8,7 @@
     "start:dev": "nodemon --watch src/**/*.ts --exec ts-node src/server.ts",
     "start:devInDocker": "nodemon --legacy-watch --watch './**/*.ts' --exec ts-node src/server.ts",
     "start:prod": "node dist/server.js",
+    "start": "npm run typeorm:run && npm run start:prod",
     "build": "tsc",
     "test": "jest --verbose",
     "test:cov": "jest --coverage",
