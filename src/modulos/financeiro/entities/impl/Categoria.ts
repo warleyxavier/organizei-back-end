@@ -24,6 +24,9 @@ export default class Categoria implements ICategoria {
 
   @Column({name: "valor_previsto"})
   ValorPrevisto: number;
+
+  @Column({name: "porcentagem_prevista"})
+  PorcentagemPrevista: number;
   
   @Column({name: "tipo", enum: TipoCategoria, transformer: TipoCategoriaTransformer})
   Tipo: TipoCategoria;

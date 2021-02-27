@@ -1,5 +1,5 @@
 import Container from "typedi";
-import CategoriaAlteradaDto from "../dto/CategoriaAlteradaDto";
+import CategoriaParaConsultaDto from "../dto/CategoriaParaConsultaDto";
 import CategoriaParaInsercaoDto from "../dto/CategoriaParaInsercaoDto";
 import ICategoria from "../entities/ICategoria";
 
@@ -8,15 +8,17 @@ export default class MapeadorDeCategoria {
     let categoria = Container.get<ICategoria>("categoria");
     categoria.Nome = dto.nome;
     categoria.ValorPrevisto = dto.valorPrevisto;
+    categoria.PorcentagemPrevista = dto.porcentagemPrevista;
     categoria.Tipo = dto.tipo;
     return categoria;
   }
 
-  public paraDto(categoria: ICategoria): CategoriaAlteradaDto {
-    let dto = new CategoriaAlteradaDto();
+  public paraDto(categoria: ICategoria): CategoriaParaConsultaDto {
+    let dto = new CategoriaParaConsultaDto();
     dto.codigo = categoria.Codigo;
     dto.nome = categoria.Nome;
     dto.valorPrevisto = categoria.ValorPrevisto;
+    dto.porcentegmPrevista = categoria.PorcentagemPrevista;
     dto.tipo = categoria.Tipo;
     return dto;
   }
