@@ -6,6 +6,7 @@ export default interface ICategoria {
   Codigo: number;
   Nome: string;
   ValorPrevisto: number;
+  PorcentagemPrevista: number;
   Usuario: IUsuario;
   Tipo: TipoCategoria;
 
