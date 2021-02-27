@@ -29,7 +29,11 @@ export default class Categoria implements ICategoria {
   Tipo: TipoCategoria;
 
   @JoinColumn({name: "usuario_id", referencedColumnName: "Codigo"})
-  @ManyToOne<Usuario>(() => Usuario)
+  @ManyToOne<Usuario>(() => Usuario, {eager: true})
   Usuario: IUsuario;
+
+  public pertenceAoUsuario(codigoUsuario: number): boolean {
+    return this.Usuario.Codigo == codigoUsuario;
+  }
 
 }

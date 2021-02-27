@@ -12,8 +12,16 @@ export default class CategoriaRepository implements ICategoriaRepository {
   @Inject("conexao")
   private conexao: IConexao;
 
-  public async salvar(categoria: ICategoria): Promise<ICategoria> {
-    return await this.conexao.getGerenciador().save(Categoria, categoria);
+  public pesquisarPeloCodigo(codigo: number): Promise<ICategoria> {
+    return this.conexao.getGerenciador().findOne(Categoria, codigo);
+  }
+
+  public salvar(categoria: ICategoria): Promise<ICategoria> {
+    return this.conexao.getGerenciador().save(Categoria, categoria);
+  }
+
+  public excluir(codigo: number): void {
+    this.conexao.getGerenciador().delete(Categoria, codigo);
   }
 
 }
