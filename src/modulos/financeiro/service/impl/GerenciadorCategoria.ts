@@ -17,6 +17,10 @@ export default class GerenciadorCategoria implements IGerenciadorCategoria {
   @Inject("financeiro.categoriaRepository")
   private categoriaRepository: ICategoriaRepository;
 
+  public  pesquisarCategoriasDeDespesa(codigoUsuario: number): Promise<ICategoria[]> {
+    return this.categoriaRepository.pesquisarCategoriasDeDespesa(codigoUsuario);
+  }
+
   public async criar(categoria: ICategoria, codigoUsuario: number): Promise<ICategoria> {
     const usuario = await this.usuarioRepository.pesquisarPorCodigo(codigoUsuario);
     categoria.Usuario = usuario;

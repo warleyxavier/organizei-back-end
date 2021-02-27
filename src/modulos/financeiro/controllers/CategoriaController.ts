@@ -1,4 +1,4 @@
-import { Body, Delete, HttpCode, JsonController, Param, Post, Req, UseBefore } from "routing-controllers";
+import { Body, Delete, Get, HttpCode, JsonController, Param, Post, Req, UseBefore } from "routing-controllers";
 import Container from "typedi";
 
 import AutenticacaoMiddleware from "../../../middlewares/AutenticacaoMiddleware";
@@ -27,6 +27,13 @@ export default class CategoriaController {
     let categoria = this.mapeadorDeCategoria.paraEntidade(categoriaParInsercao);
     let novaCategoria = await this.gerenciadorCategoria.criar(categoria, codigoUsuario);
     return this.mapeadorDeCategoria.paraDto(novaCategoria);
+  }
+
+  @Get("/despesas")
+  public async pesquisarCategoriasDeDespesas(@Req() request: any): Promise<CategoriaParaConsultaDto[]> {
+    let { codigoUsuario } = request;
+    const categorias = await this.gerenciadorCategoria.pesquisarCategoriasDeDespesa(codigoUsuario);
+    return this.mapeadorDeCategoria.paraListaDto(categorias);
   }
 
   @Delete("/:codigoCategoria")

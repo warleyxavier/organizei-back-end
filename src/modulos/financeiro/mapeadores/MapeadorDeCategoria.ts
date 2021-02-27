@@ -22,4 +22,9 @@ export default class MapeadorDeCategoria {
     dto.tipo = categoria.Tipo;
     return dto;
   }
+
+  public paraListaDto(categorias: ICategoria[]): CategoriaParaConsultaDto[] {
+    return categorias.map(categoria => this.paraDto(categoria));
+  }
+
 }

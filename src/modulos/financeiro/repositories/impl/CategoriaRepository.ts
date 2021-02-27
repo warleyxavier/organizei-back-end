@@ -2,6 +2,7 @@ import { Inject, Service } from "typedi";
 
 import IConexao from "../../../../core/config/IConexao";
 
+import { TipoCategoria } from "../../enums/TipoCategoria";
 import ICategoria from "../../entities/ICategoria";
 import Categoria from "../../entities/impl/Categoria";
 import ICategoriaRepository from "../ICategoriaRepository";
@@ -14,6 +15,14 @@ export default class CategoriaRepository implements ICategoriaRepository {
 
   public pesquisarPeloCodigo(codigo: number): Promise<ICategoria> {
     return this.conexao.getGerenciador().findOne(Categoria, codigo);
+  }
+
+  public pesquisarCategoriasDeDespesa(codigoUsuario: number): Promise<ICategoria[]> {
+    return this.conexao.getGerenciador()
+    .createQueryBuilder(Categoria, "categorias")
+    .where("categorias.usuario_id = :codigoUsuario and categorias.tipo = :tipoCategoria", {codigoUsuario, tipoCategoria: TipoCategoria.Despesa})
+    .orderBy("id")
+    .getMany();
   }
 
   public salvar(categoria: ICategoria): Promise<ICategoria> {
