@@ -8,4 +8,6 @@ export default interface ICategoria {
   ValorPrevisto: number;
   Usuario: IUsuario;
   Tipo: TipoCategoria;
+
+  pertenceAoUsuario(codigoUsuario: number): boolean;
 }
