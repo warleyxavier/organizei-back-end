@@ -18,7 +18,11 @@ export default class CategoriaRepository implements ICategoriaRepository {
   }
 
   public pesquisarTodasCategorias(codigoUsuario: number): Promise<ICategoria[]> {
-    return this.conexao.getGerenciador().find(Categoria, {order: {Codigo: "ASC"}});
+    return this.conexao.getGerenciador()
+    .createQueryBuilder(Categoria, "categorias")
+    .where("categorias.usuario_id = :codigoUsuario", {codigoUsuario})
+    .orderBy("id")
+    .getMany();
   }
 
   public pesquisarCategoriasDeDespesa(codigoUsuario: number): Promise<ICategoria[]> {
