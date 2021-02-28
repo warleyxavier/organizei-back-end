@@ -27,16 +27,25 @@ export default class GerenciadorCategoria implements IGerenciadorCategoria {
     return await this.categoriaRepository.salvar(categoria);
   }
 
+  public async atualizar(categoria: ICategoria, codigoCategoria: number, codigoUsuario: number): Promise<ICategoria> {
+    let categoriaPesquisada = await this.categoriaRepository.pesquisarPeloCodigo(codigoCategoria);
+    this.validarDadosDaCategoria(categoriaPesquisada, codigoUsuario);
+    categoriaPesquisada = {...categoriaPesquisada, ...categoria};
+    return this.categoriaRepository.salvar(categoriaPesquisada);
+  }
+
   public async excluir(codigoCategoria: number, codigoUsuario: number): Promise<void> {
     const categoria = await this.categoriaRepository.pesquisarPeloCodigo(codigoCategoria);
+    this.validarDadosDaCategoria(categoria, codigoUsuario);
+    await this.categoriaRepository.excluir(categoria.Codigo);
+  }
 
+  private validarDadosDaCategoria(categoria: ICategoria, codigoUsuario: number): void {
     if (!categoria)
       throw new ECategoriaNaoEncontradaException();
 
     if (!categoria.pertenceAoUsuario(codigoUsuario))
       throw new ECategoriaNaoPertenceAoUsuarioException();
-
-    await this.categoriaRepository.excluir(categoria.Codigo);
   }
 
 }

@@ -1,8 +1,9 @@
-import { Body, Delete, Get, HttpCode, JsonController, Param, Post, Req, UseBefore } from "routing-controllers";
+import { Body, Delete, Get, HttpCode, JsonController, Param, Post, Put, Req, UseBefore } from "routing-controllers";
 import Container from "typedi";
 
 import AutenticacaoMiddleware from "../../../middlewares/AutenticacaoMiddleware";
 
+import categoriaParaAtualizacaoDto from "../dto/CategoriaParaAtualizacaoDto";
 import CategoriaParaConsultaDto from "../dto/CategoriaParaConsultaDto";
 import CategoriaParaInsercaoDto from "../dto/CategoriaParaInsercaoDto";
 import MapeadorDeCategoria from "../mapeadores/MapeadorDeCategoria";
@@ -22,11 +23,19 @@ export default class CategoriaController {
 
   @Post("/")
   @HttpCode(201)
-  public async criar(@Req() request: any, @Body() categoriaParInsercao: CategoriaParaInsercaoDto): Promise<CategoriaParaConsultaDto> { 
+  public async criar(@Req() request: any, @Body() categoriaParaInsercao: CategoriaParaInsercaoDto): Promise<CategoriaParaConsultaDto> { 
     let { codigoUsuario } = request;
-    let categoria = this.mapeadorDeCategoria.paraEntidade(categoriaParInsercao);
+    let categoria = this.mapeadorDeCategoria.paraEntidade(categoriaParaInsercao);
     let novaCategoria = await this.gerenciadorCategoria.criar(categoria, codigoUsuario);
     return this.mapeadorDeCategoria.paraDto(novaCategoria);
+  }
+
+  @Put("/:codigoCategoria")
+  public async atualizar(@Req() request: any, @Body() categoriaParaAtualizacao: categoriaParaAtualizacaoDto, @Param("codigoCategoria") codigoCategoria: number): Promise<CategoriaParaConsultaDto> {
+    let { codigoUsuario } = request;
+    let categoria = this.mapeadorDeCategoria.dtoAtualizacaoparaEntidade(categoriaParaAtualizacao);
+    let categoriaAtualizada = await this.gerenciadorCategoria.atualizar(categoria, codigoCategoria, codigoUsuario);
+    return this.mapeadorDeCategoria.paraDto(categoriaAtualizada);
   }
 
   @Get("/despesas")
