@@ -38,6 +38,13 @@ export default class CategoriaController {
     return this.mapeadorDeCategoria.paraDto(categoriaAtualizada);
   }
 
+  @Get("/")
+  public async pesquisarTodasCategorias(@Req() request: any): Promise<CategoriaParaConsultaDto[]> {
+    let { codigoUsuario } = request;
+    const categorias = await this.gerenciadorCategoria.pesquisarTodasCategorias(codigoUsuario);
+    return this.mapeadorDeCategoria.paraListaDto(categorias);    
+  }
+
   @Get("/despesas")
   public async pesquisarCategoriasDeDespesas(@Req() request: any): Promise<CategoriaParaConsultaDto[]> {
     let { codigoUsuario } = request;
