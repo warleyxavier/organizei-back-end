@@ -12,11 +12,11 @@ export default class CriadorContaPrincipalUsuarioCommand implements IAcaoPosRegi
   @Inject("financeiro.contaRepository")
   private contaRepository: IContaRepository;
 
-  public async executar(usuario: IUsuario): Promise<void> {
+  public executar(usuario: IUsuario): void {
     let conta = Container.get<IConta>("conta");
     conta.Nome = "Conta Principal";
     conta.Usuario = usuario;
-    await this.contaRepository.inserir(conta);
+    this.contaRepository.inserir(conta);
   }
 
 }
