@@ -35,7 +35,7 @@ export default class RegistradorDeUsuario implements IRegistradorDeUsuario{
   }
 
   private async executarAcoesPosRegistro(usuario: IUsuario): Promise<void> {
-    await this.acoesPosRegistro.forEach(async acao => await acao.executar(usuario));
+    this.acoesPosRegistro.forEach(acao => acao.executar(usuario));
   }
 
 }
