@@ -17,6 +17,10 @@ export default class CategoriaRepository implements ICategoriaRepository {
     return this.conexao.getGerenciador().findOne(Categoria, codigo);
   }
 
+  public pesquisarTodasCategorias(codigoUsuario: number): Promise<ICategoria[]> {
+    return this.conexao.getGerenciador().find(Categoria, {order: {Codigo: "ASC"}});
+  }
+
   public pesquisarCategoriasDeDespesa(codigoUsuario: number): Promise<ICategoria[]> {
     return this.conexao.getGerenciador()
     .createQueryBuilder(Categoria, "categorias")
