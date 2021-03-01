@@ -8,7 +8,7 @@ import { TipoCategoria } from "../../../financeiro/enums/TipoCategoria";
 import ICategoria from "../ICategoria";
 
 const TipoCategoriaTransformer = {
-  to: (value: number) => TipoCategoria[value],
+  to: (value: TipoCategoria) => typeof value === 'number' ? value : TipoCategoria[value],
   from: (value: number) => TipoCategoria[value]
 }
 

@@ -14,6 +14,7 @@ export default class UsuarioController {
   constructor() {   
     this.registradorUsuario = Container.get<IRegistradorDeUsuario>("usuario.registradorUsuario");
     this.registradorUsuario.adicionarAcaoPosRegistro(Container.get<IAcaoPosRegistroUsuarioCommand>("usuario.criadorContaPrincipalUsuario"));
+    this.registradorUsuario.adicionarAcaoPosRegistro(Container.get<IAcaoPosRegistroUsuarioCommand>("usuario.criadorCategoriaReceitaUsuarioCommand"));
 
     this.mapeadorDeUsuario = Container.get<MapeadorDeUsuario>("usuario.mapeadorDeUsuario"); 
   }
