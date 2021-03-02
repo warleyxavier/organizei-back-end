@@ -15,6 +15,7 @@ export default class CriadorContaPrincipalUsuarioCommand implements IAcaoPosRegi
   public executar(usuario: IUsuario): void {
     let conta = Container.get<IConta>("conta");
     conta.Nome = "Conta Principal";
+    conta.EhPadrao = true;
     conta.Usuario = usuario;
     this.contaRepository.inserir(conta);
   }

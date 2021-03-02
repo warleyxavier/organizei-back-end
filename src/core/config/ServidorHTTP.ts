@@ -22,7 +22,8 @@ const app = createExpressServer({
 	middlewares: [TratamentoExcecoesMiddleware],
 	defaults: {
 		undefinedResultCode: 200
-	}
+	},
+	
 });
 
 app.use(json());

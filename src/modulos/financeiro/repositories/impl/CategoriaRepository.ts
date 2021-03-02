@@ -9,14 +9,14 @@ import ICategoriaRepository from "../ICategoriaRepository";
 
 @Service({id: "financeiro.categoriaRepository", transient: true})
 export default class CategoriaRepository implements ICategoriaRepository {
-
+  
   @Inject("conexao")
   private conexao: IConexao;
-
+  
   public pesquisarPeloCodigo(codigo: number): Promise<ICategoria> {
     return this.conexao.getGerenciador().findOne(Categoria, codigo);
   }
-
+  
   public pesquisarTodasCategorias(codigoUsuario: number): Promise<ICategoria[]> {
     return this.conexao.getGerenciador()
     .createQueryBuilder(Categoria, "categorias")
@@ -24,7 +24,7 @@ export default class CategoriaRepository implements ICategoriaRepository {
     .orderBy("id")
     .getMany();
   }
-
+  
   public pesquisarCategoriasDeDespesa(codigoUsuario: number): Promise<ICategoria[]> {
     return this.conexao.getGerenciador()
     .createQueryBuilder(Categoria, "categorias")
@@ -32,7 +32,15 @@ export default class CategoriaRepository implements ICategoriaRepository {
     .orderBy("id")
     .getMany();
   }
-
+  
+  public pesquisarCategoriaDeDespesaPadrao(codigoUsuario: number): Promise<ICategoria> {
+    return this.conexao.getGerenciador()
+    .createQueryBuilder(Categoria, "categorias")
+    .where("categorias.usuario_id = :codigoUsuario and categorias.eh_padrao = true and categorias.tipo = :tipoCategoria", {codigoUsuario, tipoCategoria: TipoCategoria.Despesa})
+    .orderBy("id")
+    .getOne();
+  }
+  
   public salvar(categoria: ICategoria): Promise<ICategoria> {
     return this.conexao.getGerenciador().save(Categoria, categoria);
   }
