@@ -1,4 +1,4 @@
-import { Body, Get, JsonController, OnUndefined, Post } from "routing-controllers";
+import { Body, JsonController, OnUndefined, Post } from "routing-controllers";
 import Container from "typedi";
 
 import DadosParaAutenticacao from "../dto/DadosParaAutenticacao";
@@ -14,7 +14,7 @@ export default class AutenticacaoController {
     this.autenticador = Container.get<IAutenticador>("autenticacao.autenticador");
   }
 
-  @Get("/autenticar")
+  @Post("/autenticar")
   @OnUndefined(200)
   public async autenticar(@Body() dadosParaAutenticacao: DadosParaAutenticacao): Promise<AccessToken> {
     return await this.autenticador.autenticar(dadosParaAutenticacao.email, dadosParaAutenticacao.senha);

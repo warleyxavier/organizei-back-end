@@ -1,4 +1,4 @@
-import { IsDate, IsNotEmpty, MaxLength, Min } from "class-validator";
+import { IsDateString, IsNotEmpty, MaxLength, Min } from "class-validator";
 
 export default class ReceitaParaInsercaoDto{
 
@@ -9,6 +9,6 @@ export default class ReceitaParaInsercaoDto{
   @Min(0.01, {message: "valor deve ser maior que 0.1"})
   valor: number;
 
-  @IsDate({message: "data deve ser enviado no formato correto"})
+  @IsDateString({strict: true}, {message: "data deve ser enviado no formato correto"})
   data: Date;
 }
