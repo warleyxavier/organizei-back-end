@@ -13,6 +13,7 @@ const app = createExpressServer({
 			'X-Access-Token',
 		],
 		credentials: true,
+		origin: '*',
 		methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
 		preflightContinue: false,
 	},
