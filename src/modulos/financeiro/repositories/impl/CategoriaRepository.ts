@@ -33,10 +33,10 @@ export default class CategoriaRepository implements ICategoriaRepository {
     .getMany();
   }
   
-  public pesquisarCategoriaDeDespesaPadrao(codigoUsuario: number): Promise<ICategoria> {
+  public pesquisarCategoriaDeReceitaPadrao(codigoUsuario: number): Promise<ICategoria> {
     return this.conexao.getGerenciador()
     .createQueryBuilder(Categoria, "categorias")
-    .where("categorias.usuario_id = :codigoUsuario and categorias.eh_padrao = true and categorias.tipo = :tipoCategoria", {codigoUsuario, tipoCategoria: TipoCategoria.Despesa})
+    .where("categorias.usuario_id = :codigoUsuario and categorias.eh_padrao = true and categorias.tipo = :tipoCategoria", {codigoUsuario, tipoCategoria: TipoCategoria.Receita})
     .orderBy("id")
     .getOne();
   }

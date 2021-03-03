@@ -14,9 +14,10 @@ export default class MovimentacaoRepository implements IMovimentacaoRepository {
   
   public pesquisarMaiorOrdem(codigoConta: number): Promise<number> {
     return this.conexao.getGerenciador()
-    .createQueryBuilder(Movimentacao, "contas")
-    .where("contas.usuario_id = :codigoUsuario and contas.eh_padrao = true", {codigoUsuario})
-    .getOne();
+    .createQueryBuilder(Movimentacao, "movimentacoes")
+    .select("coalesce(max(movimentacoes.ordem), 0)", "maior_ordem")
+    .where("movimentacoes.conta_id = :codigoConta", {codigoConta})
+    .getRawOne<number>();
   }
 
   public salvar(movimentacao: IMovimentacao): Promise<IMovimentacao> {

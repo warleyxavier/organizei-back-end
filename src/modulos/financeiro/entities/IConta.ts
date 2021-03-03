@@ -8,4 +8,5 @@ export default interface IConta {
   Usuario: IUsuario;
 
   debitar(valor: number): void;
+  creditar(valor: number): void;
 }

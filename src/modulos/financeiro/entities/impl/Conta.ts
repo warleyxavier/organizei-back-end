@@ -31,6 +31,10 @@ export default class Conta implements IConta {
   }
   
   public debitar(valor: number): void {
-    this.saldo -= valor;
+    this.saldo = Number(this.saldo) - valor;
+  }
+
+  public creditar(valor: number): void {
+    this.saldo = Number(this.saldo) + valor;
   }
 }
