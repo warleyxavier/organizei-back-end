@@ -35,7 +35,7 @@ export class criacaoTabelaMovimentacoesFinanceiras1614639972973 implements Migra
                     isNullable: false
                 },
                 {
-                    name: "usuario_id",
+                    name: "categoria_id",
                     type: "int",
                     isNullable: false
                 },
@@ -47,17 +47,17 @@ export class criacaoTabelaMovimentacoesFinanceiras1614639972973 implements Migra
             ],
             foreignKeys: [
                 {
-                    columnNames: ["usuario_id"],
-                    referencedTableName: "usuarios",
+                    columnNames: ["categoria_id"],
+                    referencedTableName: "categorias",
                     referencedColumnNames: ["id"],
-                    onUpdate: "cascade",
-                    onDelete: "cascade"                        
+                    onUpdate: "cascade"                       
                 },
                 {
                     columnNames: ["conta_id"],
                     referencedTableName: "contas",
                     referencedColumnNames: ["id"],
-                    onUpdate: "cascade"                    
+                    onUpdate: "cascade",
+                    onDelete: "cascade"                     
                 }
             ],
             uniques: [

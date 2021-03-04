@@ -13,6 +13,10 @@ import "../../modulos/autenticacao/service/impl/ValidadorJWTAccessToken";
 
 import "../../modulos/financeiro/entities/impl/Conta";
 import "../../modulos/financeiro/entities/impl/Categoria";
+import "../../modulos/financeiro/entities/impl/Movimentacao";
 import "../../modulos/financeiro/repositories/impl/ContaRepository";
 import "../../modulos/financeiro/repositories/impl/CategoriaRepository";
+import "../../modulos/financeiro/repositories/impl/MovimentacaoRepository";
 import "../../modulos/financeiro/service/impl/GerenciadorCategoria";
+import "../../modulos/financeiro/service/impl/GerenciadorMovimentacao";
+import "../../modulos/financeiro/service/impl/ProcessadorMovimentacao";

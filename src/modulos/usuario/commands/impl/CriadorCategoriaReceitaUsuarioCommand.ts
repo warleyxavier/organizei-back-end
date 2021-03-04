@@ -18,6 +18,7 @@ export default class CriadorCategoriaReceitaUsuarioCommand implements IAcaoPosRe
     categoria.Nome = 'Receita';
     categoria.Tipo = TipoCategoria.Receita;
     categoria.Usuario = usuario;
+    categoria.EhPadrao = true;
     this.categoriaRepository.salvar(categoria);
   }
 }

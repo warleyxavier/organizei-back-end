@@ -27,6 +27,9 @@ export default class Categoria implements ICategoria {
 
   @Column({name: "porcentagem_prevista"})
   PorcentagemPrevista: number;
+
+  @Column({name: "eh_padrao"})
+  EhPadrao: boolean;
   
   @Column({name: "tipo", enum: TipoCategoria, transformer: TipoCategoriaTransformer})
   Tipo: TipoCategoria;
