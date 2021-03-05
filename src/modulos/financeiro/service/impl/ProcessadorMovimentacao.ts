@@ -25,7 +25,7 @@ export default class ProcessadorMovimentacao implements IProcessadorMovimentacao
 
     const maiorOrdem: any = await this.movimentacaoRepository.pesquisarMaiorOrdem(conta.Codigo);
 
-    movimentacao.Ordem = maiorOrdem.maior_ordem + 1;
+    movimentacao.Ordem = maiorOrdem + 1;
 
     const movimentacaoInserida = await this.movimentacaoRepository.salvar(movimentacao);
     await this.contaRepository.salvar(conta);

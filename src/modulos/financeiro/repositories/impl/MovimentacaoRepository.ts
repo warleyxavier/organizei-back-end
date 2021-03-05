@@ -11,13 +11,18 @@ export default class MovimentacaoRepository implements IMovimentacaoRepository {
   
   @Inject("conexao")
   private conexao: IConexao;
-  
-  public pesquisarMaiorOrdem(codigoConta: number): Promise<number> {
-    return this.conexao.getGerenciador()
+
+  public pesquisarPelaConta(codigoConta: number): Promise<IMovimentacao[]> {
+    return this.conexao.getGerenciador().find(Movimentacao, {where: {CodigoConta: codigoConta}, order: {Ordem: "ASC"}});
+  }
+
+  public async  pesquisarMaiorOrdem(codigoConta: number): Promise<number> {
+    const { maior_ordem } = await this.conexao.getGerenciador()
     .createQueryBuilder(Movimentacao, "movimentacoes")
     .select("coalesce(max(movimentacoes.ordem), 0)", "maior_ordem")
     .where("movimentacoes.conta_id = :codigoConta", {codigoConta})
-    .getRawOne<number>();
+    .getRawOne();
+    return maior_ordem;
   }
 
   public salvar(movimentacao: IMovimentacao): Promise<IMovimentacao> {
