@@ -16,7 +16,7 @@ export default class MovimentacaoRepository implements IMovimentacaoRepository {
     return this.conexao.getGerenciador().find(Movimentacao, {where: {CodigoConta: codigoConta}, order: {Ordem: "ASC"}});
   }
 
-  public async  pesquisarMaiorOrdem(codigoConta: number): Promise<number> {
+  public async pesquisarMaiorOrdem(codigoConta: number): Promise<number> {
     const { maior_ordem } = await this.conexao.getGerenciador()
     .createQueryBuilder(Movimentacao, "movimentacoes")
     .select("coalesce(max(movimentacoes.ordem), 0)", "maior_ordem")
