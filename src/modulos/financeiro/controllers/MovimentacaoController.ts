@@ -1,4 +1,4 @@
-import { Body, HttpCode, JsonController, Post, Req, UseBefore } from "routing-controllers";
+import { Body, Get, HttpCode, JsonController, Post, Req, UseBefore } from "routing-controllers";
 import Container from "typedi";
 
 import AutenticacaoMiddleware from "../../../middlewares/AutenticacaoMiddleware";
@@ -18,6 +18,14 @@ export default class MovimentacaoController {
   constructor() {
     this.gerenciadorMovimentacoes = Container.get<IGerenciadorMovimentacao>("financeiro.gerenciadorMovimentacao");
     this.mapeadorDeMovimentacao = new MapeadorDeMovimentacao();
+  }
+
+  @Get("/conta-padrao")
+  public async pesquisarMovimentacoesContaPadrao(@Req() request: any): Promise<MovimentacaoParaConsultaDto[]> {
+    let { codigoUsuario } = request;
+    const movimentacoes = await this.gerenciadorMovimentacoes.pesquisarMovimentacoesContaPadrao(codigoUsuario);
+    console.log(movimentacoes);
+    return this.mapeadorDeMovimentacao.paraListaDto(movimentacoes);
   }
 
   @Post("/receitas/padrao")
