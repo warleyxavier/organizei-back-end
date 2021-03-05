@@ -25,4 +25,9 @@ export default class MapeadorDeMovimentacao {
     };
     return dto;
   }
+
+  public paraListaDto(movimentacoes: IMovimentacao[]): MovimentacaoParaConsultaDto[] {
+    return movimentacoes.map(movimentacao => this.paraDto(movimentacao));
+  }
+
 }

@@ -25,12 +25,15 @@ export default class Movimentacao implements IMovimentacao {
 
   @Column({name: "ordem"})
   Ordem: number;
-  
+
+  @Column({name: "conta_id"})
+  CodigoConta: number;
+
   @JoinColumn({name: "conta_id", referencedColumnName: "Codigo"})
   @ManyToOne<Conta>(() => Conta)
   Conta: IConta;
   
   @JoinColumn({name: "categoria_id", referencedColumnName: "Codigo"})
-  @ManyToOne<Categoria>(() => Categoria)
+  @ManyToOne<Categoria>(() => Categoria, {eager: true})
   Categoria: ICategoria;
 }
