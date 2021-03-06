@@ -1,10 +1,20 @@
 import Container from "typedi";
 import MovimentacaoParaConsultaDto from "../dto/MovimentacaoParaConsultaDto";
+import MovimentacaoParaInsercaoDto from "../dto/MovimentacaoParaInsercaoDto";
 
 import ReceitaParaInsercaoDto from "../dto/ReceitaParaInsercaoDto";
 import IMovimentacao from "../entities/IMovimentacao";
 
 export default class MapeadorDeMovimentacao {
+
+  public dtoInsercaoparaEntidade(dto: MovimentacaoParaInsercaoDto): IMovimentacao {
+    let movimentacao: IMovimentacao = Container.get<IMovimentacao>("movimentacao");
+    movimentacao.Data = dto.data;
+    movimentacao.Descricao = dto.descricao;
+    movimentacao.Valor = dto.valor;
+    return movimentacao;
+  }  
+
   public paraEntidade(dto: ReceitaParaInsercaoDto): IMovimentacao {
     let movimentacao: IMovimentacao = Container.get<IMovimentacao>("movimentacao");
     movimentacao.Data = dto.data;

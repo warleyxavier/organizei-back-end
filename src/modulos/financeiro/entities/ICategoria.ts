@@ -12,4 +12,5 @@ export default interface ICategoria {
   Tipo: TipoCategoria;
 
   pertenceAoUsuario(codigoUsuario: number): boolean;
+  ehDespesa(): boolean;
 }

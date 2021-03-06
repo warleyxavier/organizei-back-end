@@ -42,4 +42,8 @@ export default class Categoria implements ICategoria {
     return this.Usuario.Codigo == codigoUsuario;
   }
 
+  public ehDespesa(): boolean {
+   return TipoCategoria[this.Tipo] == '1' || this.Tipo == TipoCategoria.Despesa;
+  }
+
 }

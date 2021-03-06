@@ -2,8 +2,9 @@ import { Body, Get, HttpCode, JsonController, Post, Req, UseBefore } from "routi
 import Container from "typedi";
 
 import AutenticacaoMiddleware from "../../../middlewares/AutenticacaoMiddleware";
-import MovimentacaoParaConsultaDto from "../dto/MovimentacaoParaConsultaDto";
 
+import MovimentacaoParaConsultaDto from "../dto/MovimentacaoParaConsultaDto";
+import MovimentacaoParaInsercaoDto from "../dto/MovimentacaoParaInsercaoDto";
 import ReceitaParaInsercaoDto from "../dto/ReceitaParaInsercaoDto";
 import MapeadorDeMovimentacao from "../mapeadores/MapeadorDeMovimentacao";
 import IGerenciadorMovimentacao from "../service/IGerenciadorMovimentacao";
@@ -26,6 +27,15 @@ export default class MovimentacaoController {
     const movimentacoes = await this.gerenciadorMovimentacoes.pesquisarMovimentacoesContaPadrao(codigoUsuario);
     console.log(movimentacoes);
     return this.mapeadorDeMovimentacao.paraListaDto(movimentacoes);
+  }
+
+  @Post("/conta-padrao")
+  @HttpCode(201)
+  public async criarMovimentacaoContaPadrao(@Req() request: any, @Body() movimentacaoDto: MovimentacaoParaInsercaoDto): Promise<MovimentacaoParaConsultaDto> {
+    let { codigoUsuario } = request;
+    const movimentacao = this.mapeadorDeMovimentacao.dtoInsercaoparaEntidade(movimentacaoDto);
+    const novaMovimentacao = await this.gerenciadorMovimentacoes.criarMovimentacaoNaContaPadrao(movimentacao, movimentacaoDto.codigoCategoria, codigoUsuario);
+    return this.mapeadorDeMovimentacao.paraDto(novaMovimentacao);
   }
 
   @Post("/receitas/padrao")
