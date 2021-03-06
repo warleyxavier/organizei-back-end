@@ -1,6 +1,5 @@
 import { Inject, Service } from "typedi";
 
-import { TipoCategoria } from "../../enums/TipoCategoria";
 import IMovimentacao from "../../entities/IMovimentacao";
 import IContaRepository from "../../repositories/IContaRepository";
 import IMovimentacaoRepository from "../../repositories/IMovimentacaoRepository";
