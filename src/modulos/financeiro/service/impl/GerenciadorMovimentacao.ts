@@ -1,5 +1,6 @@
 import { Inject, Service } from "typedi";
 
+import { ECategoriaNaoEncontradaException } from "../../exception";
 import IMovimentacao from "../../entities/IMovimentacao";
 import ICategoriaRepository from "../../repositories/ICategoriaRepository";
 import IMovimentacaoRepository from "../../repositories/IMovimentacaoRepository";
@@ -30,6 +31,19 @@ export default class GerenciadorMovimentacao implements IGerenciadorMovimentacao
   public async criarReceitaPadrao(movimentacao: IMovimentacao, codigoUsuario: number): Promise<IMovimentacao> {
     const conta = await this.contaRepository.pesquisarContaPadrao(codigoUsuario);
     const categoria = await this.categoriaRepository.pesquisarCategoriaDeReceitaPadrao(codigoUsuario);
+
+    movimentacao.Categoria = categoria;
+    movimentacao.Conta = conta;
+
+    return await this.processadorMovimentacao.processar(movimentacao);
+  }
+
+  public async criarMovimentacaoNaContaPadrao(movimentacao: IMovimentacao, codigoCategoria: number, codigoUsuario: number): Promise<IMovimentacao> {
+    const conta = await this.contaRepository.pesquisarContaPadrao(codigoUsuario);
+    const categoria = await this.categoriaRepository.pesquisarPeloCodigo(codigoCategoria);
+
+    if (!categoria)
+      throw new ECategoriaNaoEncontradaException();
 
     movimentacao.Categoria = categoria;
     movimentacao.Conta = conta;

@@ -18,7 +18,7 @@ export default class ProcessadorMovimentacao implements IProcessadorMovimentacao
   public async processar(movimentacao: IMovimentacao): Promise<IMovimentacao> {
     let conta = movimentacao.Conta;
 
-    if (movimentacao.Categoria.Tipo == TipoCategoria.Despesa)
+    if (movimentacao.Categoria.ehDespesa())
       conta.debitar(movimentacao.Valor)
     else
       conta.creditar(movimentacao.Valor);
