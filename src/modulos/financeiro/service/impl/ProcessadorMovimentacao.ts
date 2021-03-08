@@ -1,6 +1,5 @@
 import { Inject, Service } from "typedi";
 
-import { TipoCategoria } from "../../enums/TipoCategoria";
 import IMovimentacao from "../../entities/IMovimentacao";
 import IContaRepository from "../../repositories/IContaRepository";
 import IMovimentacaoRepository from "../../repositories/IMovimentacaoRepository";
@@ -18,7 +17,7 @@ export default class ProcessadorMovimentacao implements IProcessadorMovimentacao
   public async processar(movimentacao: IMovimentacao): Promise<IMovimentacao> {
     let conta = movimentacao.Conta;
 
-    if (movimentacao.Categoria.Tipo == TipoCategoria.Despesa)
+    if (movimentacao.Categoria.ehDespesa())
       conta.debitar(movimentacao.Valor)
     else
       conta.creditar(movimentacao.Valor);
