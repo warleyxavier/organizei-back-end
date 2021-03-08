@@ -30,10 +30,14 @@ export default class Movimentacao implements IMovimentacao {
   CodigoConta: number;
 
   @JoinColumn({name: "conta_id", referencedColumnName: "Codigo"})
-  @ManyToOne<Conta>(() => Conta)
+  @ManyToOne<Conta>(() => Conta, {eager: true})
   Conta: IConta;
   
   @JoinColumn({name: "categoria_id", referencedColumnName: "Codigo"})
   @ManyToOne<Categoria>(() => Categoria, {eager: true})
   Categoria: ICategoria;
+
+  public pertenceAoUsuario(codigoUsuario: number): boolean {
+    return this.Conta.Usuario.Codigo == codigoUsuario;
+  }
 }

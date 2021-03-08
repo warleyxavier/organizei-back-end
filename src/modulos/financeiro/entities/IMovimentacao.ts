@@ -10,4 +10,6 @@ export default interface IMovimentacao {
 
   Categoria: ICategoria;
   Conta: IConta;
+
+  pertenceAoUsuario(codigoUsuario: number): boolean;
 }
