@@ -19,4 +19,5 @@ import "../../modulos/financeiro/repositories/impl/CategoriaRepository";
 import "../../modulos/financeiro/repositories/impl/MovimentacaoRepository";
 import "../../modulos/financeiro/service/impl/GerenciadorCategoria";
 import "../../modulos/financeiro/service/impl/GerenciadorMovimentacao";
+import "../../modulos/financeiro/service/impl/GerenciadorConta";
 import "../../modulos/financeiro/service/impl/ProcessadorMovimentacao";
