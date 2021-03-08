@@ -29,4 +29,12 @@ export default class MovimentacaoRepository implements IMovimentacaoRepository {
     return this.conexao.getGerenciador().save(Movimentacao, movimentacao);
   }
 
+  public pesquisarPeloCodigo(codigo: number): Promise<IMovimentacao> {
+    return this.conexao.getGerenciador().findOne(Movimentacao, {where: {Codigo: codigo}});
+  }
+
+  public excluir(codigo: number): void {
+    this.conexao.getGerenciador().delete(Movimentacao, codigo);
+  }
+
 }
