@@ -1,4 +1,4 @@
-import { Body, Get, HttpCode, JsonController, Post, Req, UseBefore } from "routing-controllers";
+import { Body, Delete, Get, HttpCode, JsonController, Param, Post, Req, UseBefore } from "routing-controllers";
 import Container from "typedi";
 
 import AutenticacaoMiddleware from "../../../middlewares/AutenticacaoMiddleware";
@@ -45,6 +45,12 @@ export default class MovimentacaoController {
     const movimentacao = this.mapeadorDeMovimentacao.paraEntidade(receita);
     const novaMovimentacao = await this.gerenciadorMovimentacoes.criarReceitaPadrao(movimentacao, codigoUsuario);
     return this.mapeadorDeMovimentacao.paraDto(novaMovimentacao);
+  }
+
+  @Delete("/:codigoMovimentacao")
+  public async excluir(@Req() request: any, @Param("codigoMovimentacao") codigoMovimentacao: number): Promise<void> {
+    let { codigoUsuario } = request;
+    await this.gerenciadorMovimentacoes.excluir(codigoMovimentacao, codigoUsuario);
   }
 
 }

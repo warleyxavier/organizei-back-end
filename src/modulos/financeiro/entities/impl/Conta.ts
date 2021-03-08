@@ -23,7 +23,7 @@ export default class Conta implements IConta {
   EhPadrao: boolean; 
   
   @JoinColumn({name: "usuario_id", referencedColumnName: "Codigo"})
-  @ManyToOne<Usuario>(() => Usuario)
+  @ManyToOne<Usuario>(() => Usuario, {eager: true})
   public Usuario: IUsuario;
   
   public get Saldo(): number {
@@ -31,10 +31,10 @@ export default class Conta implements IConta {
   }
   
   public debitar(valor: number): void {
-    this.saldo = Number(this.saldo) - valor;
+    this.saldo = Number(this.saldo) - Number(valor);
   }
 
   public creditar(valor: number): void {
-    this.saldo = Number(this.saldo) + valor;
+    this.saldo = Number(this.saldo) + Number(valor);
   }
 }

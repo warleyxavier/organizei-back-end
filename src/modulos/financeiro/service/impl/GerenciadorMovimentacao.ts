@@ -1,6 +1,6 @@
 import { Inject, Service } from "typedi";
 
-import { ECategoriaNaoEncontradaException } from "../../exception";
+import { ECategoriaNaoEncontradaException, EMovimentacaoNaoEncontradaException, EMovimentacaoNaoPertenceAoUsuarioException } from "../../exception";
 import IMovimentacao from "../../entities/IMovimentacao";
 import ICategoriaRepository from "../../repositories/ICategoriaRepository";
 import IMovimentacaoRepository from "../../repositories/IMovimentacaoRepository";
@@ -49,6 +49,20 @@ export default class GerenciadorMovimentacao implements IGerenciadorMovimentacao
     movimentacao.Conta = conta;
 
     return await this.processadorMovimentacao.processar(movimentacao);
+  }
+
+  public async excluir(codigoMovimentacao: number, codigoUsuario: number): Promise<void> {
+    const movimentacao = await this.movimentacaoRepository.pesquisarPeloCodigo(codigoMovimentacao);
+    this.validarMovimentacao(movimentacao, codigoUsuario);
+    this.processadorMovimentacao.excluir(movimentacao);
+  }
+
+  private validarMovimentacao(movimentacao: IMovimentacao, codigoUsuario: number): void {
+    if (!movimentacao)
+      throw new EMovimentacaoNaoEncontradaException();
+
+    if (!movimentacao.pertenceAoUsuario(codigoUsuario))
+      throw new EMovimentacaoNaoPertenceAoUsuarioException();
   }
 
 }

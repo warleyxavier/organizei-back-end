@@ -16,20 +16,22 @@ export default class ProcessadorMovimentacao implements IProcessadorMovimentacao
 
   public async processar(movimentacao: IMovimentacao): Promise<IMovimentacao> {
     let conta = movimentacao.Conta;
-
-    if (movimentacao.Categoria.ehDespesa())
-      conta.debitar(movimentacao.Valor)
-    else
-      conta.creditar(movimentacao.Valor);
+    movimentacao.Categoria.ehDespesa() ? conta.debitar(movimentacao.Valor) : conta.creditar(movimentacao.Valor);
 
     const maiorOrdem: any = await this.movimentacaoRepository.pesquisarMaiorOrdem(conta.Codigo);
-
     movimentacao.Ordem = maiorOrdem + 1;
 
     const movimentacaoInserida = await this.movimentacaoRepository.salvar(movimentacao);
     await this.contaRepository.salvar(conta);
 
     return movimentacaoInserida;
+  }
+
+  public async excluir(movimentacao: IMovimentacao): Promise<void> {
+    let conta = movimentacao.Conta;
+    movimentacao.Categoria.ehDespesa() ? conta.creditar(movimentacao.Valor) : conta.debitar(movimentacao.Valor);
+    await this.movimentacaoRepository.excluir(movimentacao.Codigo);
+    this.contaRepository.salvar(conta);
   }
 
 }
