@@ -1,3 +1,5 @@
+import IUsuario from "../../usuario/entities/IUsuario";
+
 export default interface IObjetivoFinanceiro {
   Codigo: number;
   Descricao: string;
@@ -5,4 +7,6 @@ export default interface IObjetivoFinanceiro {
   Saldo: number;
   Prazo: Date;
   Arquivado: boolean;
+
+  Usuario: IUsuario;
 }

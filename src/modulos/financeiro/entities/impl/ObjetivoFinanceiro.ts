@@ -1,5 +1,8 @@
 import { Service } from "typedi";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+
+import IUsuario from "../../../usuario/entities/IUsuario";
+import Usuario from "../../../usuario/entities/impl/Usuario";
 import IObjetivoFinanceiro from "../IObjetivoFinanceiro";
 
 @Service({id: "objetivoFinanceiro", transient: true})
@@ -23,5 +26,9 @@ export default class ObjetivoFinanceiro implements IObjetivoFinanceiro {
 
   @Column({name: "arquivado"})
   Arquivado: boolean;
+
+  @JoinColumn({name: "usuario_id", referencedColumnName: "Codigo"})
+  @ManyToOne<Usuario>(() => Usuario, {eager: true})
+  Usuario: IUsuario;
 
 }
