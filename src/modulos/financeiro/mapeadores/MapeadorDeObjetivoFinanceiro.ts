@@ -1,6 +1,7 @@
 import Container from "typedi";
-import ObjetivoFinanceiroParaConsultaDto from "../dto/ObjetivoFinanceiroParaConsultaDto";
+import * as moment from "moment";
 
+import ObjetivoFinanceiroParaConsultaDto from "../dto/ObjetivoFinanceiroParaConsultaDto";
 import ObjetivoParaInsercaoDto from "../dto/ObjetivoFinanceiroParaInsercaoDto";
 import IObjetivoFinanceiro from "../entities/IObjetivoFinanceiro";
 
@@ -18,9 +19,14 @@ export default class MapeadorDeObjetivoFinanceiro {
     let dto = new ObjetivoFinanceiroParaConsultaDto();
     dto.codigo = objetivo.Codigo;
     dto.descricao = objetivo.Descricao;
-    dto.prazo = objetivo.Prazo;
+    dto.prazo = moment(objetivo.Prazo).format("DD/MM/YYYY");
     dto.valorMeta = objetivo.ValorMeta;
     dto.saldo = objetivo.Saldo;
+    dto.percentualAtingido = ((dto.valorMeta / 100) * dto.saldo).toFixed(2) + '%';
     return dto;
   }
+
+  public paraListaDto(objetivos: IObjetivoFinanceiro[]): ObjetivoFinanceiroParaConsultaDto[] {
+    return objetivos.map(objetivo => this.paraDto(objetivo));
+  } 
 }

@@ -1,7 +1,8 @@
 export default class ObjetivoFinanceiroParaConsultaDto {
   codigo: number;
   descricao: string;
-  prazo: Date;
+  prazo: string;
   valorMeta: number;
   saldo: number;
+  percentualAtingido: string;
 }
