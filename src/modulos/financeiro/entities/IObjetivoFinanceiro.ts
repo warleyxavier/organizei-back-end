@@ -1,4 +1,5 @@
 import IUsuario from "../../usuario/entities/IUsuario";
+import ICategoria from "./ICategoria";
 
 export default interface IObjetivoFinanceiro {
   Codigo: number;
@@ -9,4 +10,6 @@ export default interface IObjetivoFinanceiro {
   Arquivado: boolean;
 
   Usuario: IUsuario;
+  CategoriaDeposito: ICategoria;
+  CategoriaResgate: ICategoria;
 }
