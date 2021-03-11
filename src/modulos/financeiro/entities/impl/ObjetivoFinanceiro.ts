@@ -4,6 +4,8 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "t
 import IUsuario from "../../../usuario/entities/IUsuario";
 import Usuario from "../../../usuario/entities/impl/Usuario";
 import IObjetivoFinanceiro from "../IObjetivoFinanceiro";
+import ICategoria from "../ICategoria";
+import Categoria from "./Categoria";
 
 @Service({id: "objetivoFinanceiro", transient: true})
 @Entity("objetivos_financeiros")
@@ -30,5 +32,13 @@ export default class ObjetivoFinanceiro implements IObjetivoFinanceiro {
   @JoinColumn({name: "usuario_id", referencedColumnName: "Codigo"})
   @ManyToOne<Usuario>(() => Usuario, {eager: true})
   Usuario: IUsuario;
+
+  @JoinColumn({name: "categoria_deposito_id", referencedColumnName: "Codigo"})
+  @ManyToOne<Categoria>(() => Categoria, {eager: true})
+  CategoriaDeposito: ICategoria;
+
+  @JoinColumn({name: "categoria_resgate_id", referencedColumnName: "Codigo"})
+  @ManyToOne<Categoria>(() => Categoria, {eager: true})
+  CategoriaResgate: ICategoria;
 
 }
