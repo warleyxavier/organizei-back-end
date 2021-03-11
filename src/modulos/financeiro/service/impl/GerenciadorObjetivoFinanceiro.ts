@@ -39,4 +39,8 @@ export default class GerenciadorObjetivoFinanceiro implements IGerenciadorObjeti
     return categoria;
   }
 
+  public pesquisar(codigoUsuario: number): Promise<IObjetivoFinanceiro[]> {
+    return this.objetivoRepository.pesquisar(codigoUsuario);
+  }
+
 }

@@ -7,38 +7,53 @@ import IObjetivoFinanceiro from "../IObjetivoFinanceiro";
 import ICategoria from "../ICategoria";
 import Categoria from "./Categoria";
 
-@Service({id: "objetivoFinanceiro", transient: true})
+@Service({ id: "objetivoFinanceiro", transient: true })
 @Entity("objetivos_financeiros")
 export default class ObjetivoFinanceiro implements IObjetivoFinanceiro {
-  
-  @PrimaryGeneratedColumn({name: "id"})
+
+  @PrimaryGeneratedColumn({ name: "id" })
   Codigo: number;
 
-  @Column({name: "descricao"})
+  @Column({ name: "descricao" })
   Descricao: string;
 
-  @Column({name: "valor_da_meta"})
+  @Column({ name: "valor_da_meta" })
   ValorMeta: number;
 
-  @Column({name: "saldo"})
+  @Column({ name: "saldo" })
   Saldo: number;
 
-  @Column({name: "prazo"})
+  @Column({ name: "prazo" })
   Prazo: Date;
 
-  @Column({name: "arquivado"})
+  @Column({ name: "arquivado" })
   Arquivado: boolean;
 
-  @JoinColumn({name: "usuario_id", referencedColumnName: "Codigo"})
-  @ManyToOne<Usuario>(() => Usuario, {eager: true})
-  Usuario: IUsuario;
+  @Column({ name: "usuario_id" })
+  CodigoUsuario: number;
 
-  @JoinColumn({name: "categoria_deposito_id", referencedColumnName: "Codigo"})
-  @ManyToOne<Categoria>(() => Categoria, {eager: true})
+  @JoinColumn({ name: "usuario_id", referencedColumnName: "Codigo" })
+  @ManyToOne<Usuario>(() => Usuario, { eager: true })
+  private usuario: IUsuario;
+
+  @JoinColumn({ name: "categoria_deposito_id", referencedColumnName: "Codigo" })
+  @ManyToOne<Categoria>(() => Categoria, { eager: true })
   CategoriaDeposito: ICategoria;
 
-  @JoinColumn({name: "categoria_resgate_id", referencedColumnName: "Codigo"})
-  @ManyToOne<Categoria>(() => Categoria, {eager: true})
+  @JoinColumn({ name: "categoria_resgate_id", referencedColumnName: "Codigo" })
+  @ManyToOne<Categoria>(() => Categoria, { eager: true })
   CategoriaResgate: ICategoria;
+
+  public get Usuario() {
+    return this.usuario;
+  }
+
+  public set Usuario(usuario: IUsuario) {
+    this.CodigoUsuario = 0;
+    this.usuario = usuario;
+
+    if (this.usuario)
+      this.CodigoUsuario = this.usuario.Codigo;
+  }
 
 }

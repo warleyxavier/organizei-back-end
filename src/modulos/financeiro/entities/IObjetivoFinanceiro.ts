@@ -9,6 +9,8 @@ export default interface IObjetivoFinanceiro {
   Prazo: Date;
   Arquivado: boolean;
 
+  CodigoUsuario: number;
+
   Usuario: IUsuario;
   CategoriaDeposito: ICategoria;
   CategoriaResgate: ICategoria;
