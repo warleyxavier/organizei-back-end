@@ -1,7 +1,7 @@
 {
-  "name": "typescript-typeorm-boilerplate",
+  "name": "organizei-back-end",
   "version": "1.0.0",
-  "description": "A Javascript biolerplate including Typescript, Typeorm, Jest, ESLint and Docker",
+  "description": "Organizei Back end",
   "main": "server.ts",
   "scripts": {
     "lint": "eslint \"src/**/*.ts\"",
