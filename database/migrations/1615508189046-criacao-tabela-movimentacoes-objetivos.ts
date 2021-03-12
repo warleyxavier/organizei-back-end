@@ -41,7 +41,8 @@ export class criacaoTabelaMovimentacoesObjetivos1615508189046 implements Migrati
                 },
                 {
                     name: "conta_id",
-                    "type": "int"
+                    type: "int",
+                    isNullable: true
                 }
             ],
             foreignKeys: [

@@ -23,4 +23,4 @@ import "../../modulos/financeiro/service/impl/GerenciadorCategoria";
 import "../../modulos/financeiro/service/impl/GerenciadorMovimentacao";
 import "../../modulos/financeiro/service/impl/GerenciadorConta";
 import "../../modulos/financeiro/service/impl/GerenciadorObjetivoFinanceiro";
-import "../../modulos/financeiro/service/impl/ProcessadorMovimentacao";
+import "../../modulos/financeiro/service/impl/CriadorObjetivoFinanceiro";
