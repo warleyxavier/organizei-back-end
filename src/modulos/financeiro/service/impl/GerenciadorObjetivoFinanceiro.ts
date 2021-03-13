@@ -1,5 +1,7 @@
 import { Inject, Service } from "typedi";
 
+import { EObjetivoNaoEncontradoException, EObjetivoNaoPertenceAoUsuarioException } from "../../exception";
+import IMovimentacaoObjetivo from "../../entities/IMovimentacaoObjetivo";
 import IObjetivoFinanceiro from "../../entities/IObjetivoFinanceiro";
 import IObjetivoFinanceiroRepository from "../../repositories/IObjetivoFinanceiroRepository";
 import ICriadorObjetivoFinanceiro from "../ICriadorObjetivoFinanceiro";
@@ -19,7 +21,19 @@ export default class GerenciadorObjetivoFinanceiro implements IGerenciadorObjeti
   }
 
   public pesquisar(codigoUsuario: number): Promise<IObjetivoFinanceiro[]> {
-    return this.objetivoRepository.pesquisar(codigoUsuario);
+    return this.objetivoRepository.pesquisarPeloUsuario(codigoUsuario);
+  }
+
+  public async pesquisarMovimentacoes(codigoObjetivo: number, codigoUsuario: number): Promise<IMovimentacaoObjetivo[]> {
+    const objetivo = await this.objetivoRepository.pesquisarPeloCodigo(codigoObjetivo);
+
+    if (!objetivo)
+      throw new EObjetivoNaoEncontradoException();
+
+    if (!objetivo.pertenceAoUsuario(codigoUsuario))
+      throw new EObjetivoNaoPertenceAoUsuarioException();
+
+    return this.objetivoRepository.pesquisarMovimentacoes(objetivo.Codigo);
   }
 
 }

@@ -3,7 +3,9 @@ import IObjetivoFinanceiro from "../entities/IObjetivoFinanceiro";
 
 export default interface IObjetivoFinanceiroRepository {
   salvar(objetivo: IObjetivoFinanceiro): Promise<IObjetivoFinanceiro>;
-  pesquisar(codigoUsuario: number): Promise<IObjetivoFinanceiro[]>;
-
+  pesquisarPeloUsuario(codigoUsuario: number): Promise<IObjetivoFinanceiro[]>;
+  pesquisarPeloCodigo(codigo: number): Promise<IObjetivoFinanceiro>;
+  
   salvarMovimentacao(movimentacao: IMovimentacaoObjetivo): Promise<IMovimentacaoObjetivo>;
+  pesquisarMovimentacoes(codigoObjetivo: number): Promise<IMovimentacaoObjetivo[]>;
 }

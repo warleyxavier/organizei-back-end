@@ -14,4 +14,6 @@ export default interface IObjetivoFinanceiro {
   Usuario: IUsuario;
   CategoriaDeposito: ICategoria;
   CategoriaResgate: ICategoria;
+
+  pertenceAoUsuario(codigoUsuario: number): boolean;
 }

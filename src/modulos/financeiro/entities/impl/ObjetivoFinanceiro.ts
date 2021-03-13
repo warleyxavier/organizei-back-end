@@ -56,4 +56,8 @@ export default class ObjetivoFinanceiro implements IObjetivoFinanceiro {
       this.CodigoUsuario = this.usuario.Codigo;
   }
 
+  public pertenceAoUsuario(codigoUsuario: number): boolean {
+    return this.CodigoUsuario == codigoUsuario;
+  }
+
 }
