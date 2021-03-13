@@ -1,6 +1,6 @@
 import { Inject, Service } from "typedi";
 
-import { EObjetivoNaoEncontradoException, EObjetivoNaoPertenceAoUsuarioException } from "../../exception";
+import { EObjetivoNaoEncontradoException, EObjetivoNaoPertenceAoUsuarioException, EObjetivoArquivadoException } from "../../exception";
 import IMovimentacaoObjetivo from "../../entities/IMovimentacaoObjetivo";
 import IObjetivoFinanceiro from "../../entities/IObjetivoFinanceiro";
 import IObjetivoFinanceiroRepository from "../../repositories/IObjetivoFinanceiroRepository";
@@ -40,6 +40,9 @@ export default class GerenciadorObjetivoFinanceiro implements IGerenciadorObjeti
 
     if (!objetivo.pertenceAoUsuario(codigoUsuario))
       throw new EObjetivoNaoPertenceAoUsuarioException();
+
+    if (objetivo.Arquivado)
+      throw new EObjetivoArquivadoException();
   }
 
   public pesquisar(codigoUsuario: number): Promise<IObjetivoFinanceiro[]> {
@@ -50,6 +53,11 @@ export default class GerenciadorObjetivoFinanceiro implements IGerenciadorObjeti
     const objetivo = await this.objetivoRepository.pesquisarPeloCodigo(codigoObjetivo);
     this.validarObjetivo(objetivo, codigoUsuario);
     return this.objetivoRepository.pesquisarMovimentacoes(objetivo.Codigo);
+  }
+
+  public async lancarMovimentacao(movimentacaoObjetivo: IMovimentacaoObjetivo, codigoObjetivo: number, codigoUsuario: number): Promise<IMovimentacaoObjetivo> {
+    const objetivo = await this.objetivoRepository.pesquisarPeloCodigo(codigoObjetivo);
+    this.validarObjetivo(objetivo, codigoUsuario);
   }
 
 }
