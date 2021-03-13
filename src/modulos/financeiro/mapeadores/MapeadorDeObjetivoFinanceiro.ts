@@ -22,7 +22,7 @@ export default class MapeadorDeObjetivoFinanceiro {
     dto.prazo = moment(objetivo.Prazo).format("DD/MM/YYYY");
     dto.valorMeta = objetivo.ValorMeta;
     dto.saldo = objetivo.Saldo;
-    dto.percentualAtingido = ((dto.valorMeta / 100) * dto.saldo).toFixed(2) + '%';
+    dto.percentualAtingido = ((Number(dto.saldo) * 100) / Number(dto.valorMeta)).toFixed(2) + '%';
     return dto;
   }
 
