@@ -21,7 +21,7 @@ export default class ObjetivoFinanceiro implements IObjetivoFinanceiro {
   ValorMeta: number;
 
   @Column({ name: "saldo" })
-  Saldo: number;
+  private saldo: number;
 
   @Column({ name: "prazo" })
   Prazo: Date;
@@ -48,6 +48,10 @@ export default class ObjetivoFinanceiro implements IObjetivoFinanceiro {
     return this.usuario;
   }
 
+  public get Saldo() {
+    return this.saldo;
+  }
+
   public set Usuario(usuario: IUsuario) {
     this.CodigoUsuario = 0;
     this.usuario = usuario;
@@ -62,6 +66,14 @@ export default class ObjetivoFinanceiro implements IObjetivoFinanceiro {
 
   public arquivar(): void {
     this.Arquivado = true;
+  }
+
+  public permiteResgateDeValor(valor: number): boolean {
+    return (Number(this.Saldo) - Number(valor)) >= 0;
+  }
+
+  public debitar(valor: number): void {
+    this.saldo = Number(this.Saldo) - Number(valor);
   }
 
 }
