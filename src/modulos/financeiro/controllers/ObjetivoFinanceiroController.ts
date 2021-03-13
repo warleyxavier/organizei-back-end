@@ -1,4 +1,4 @@
-import { Body, Get, JsonController, Param, Post, Put, Req, UseBefore } from "routing-controllers";
+import { Body, Get, HttpCode, JsonController, Param, Patch, Post, Put, Req, UseBefore } from "routing-controllers";
 import Container from "typedi";
 
 import AutenticacaoMiddleware from "../../../middlewares/AutenticacaoMiddleware";
@@ -9,7 +9,6 @@ import MovimentacaoObjetivoParaConsultaDto from "../dto/MovimentacaoObjetivoPara
 import MapeadorDeObjetivoFinanceiro from "../mapeadores/MapeadorDeObjetivoFinanceiro";
 import MapeadorDeMovimentacaoObjetivo from "../mapeadores/MapeadorDeMovimentacaoObjetivo";
 import IGerenciadorObjetivoFinanceiro from "../service/IGerenciadorObjetivoFinanceiro";
-import { runInThisContext } from "vm";
 import ObjetivoFinanceiroParaAtualizacaoDto from "../dto/ObjetivoFinanceiroParaAtualizacaoDto";
 
 @JsonController("/objetivos")
@@ -26,7 +25,9 @@ export default class ObjetivoFinanceiroController {
     this.mapeadorMovimentacao = new MapeadorDeMovimentacaoObjetivo();
   }
 
+
   @Post("/")
+  @HttpCode(201)
   public async criar(@Req() request: any, @Body() dto: ObjetivoParaInsercaoDto): Promise<ObjetivoFinanceiroParaConsultaDto> {
     const { codigoUsuario } = request;
     const objetivo = this.mapeadorObjetivo.paraEntidade(dto);
@@ -48,6 +49,13 @@ export default class ObjetivoFinanceiroController {
     
     const objetivoAtualizado = await this.gerenciadorObjetivo.atualizar(objetivo, codigoObjetivo, codigoUsuario);
     return this.mapeadorObjetivo.paraDto(objetivoAtualizado);
+  }
+
+  @Patch("/:codigoObjetivo/arquivar")
+  @HttpCode(204)
+  public async arquivar(@Req() request: any, @Param("codigoObjetivo") codigoObjetivo: number): Promise<void> {
+    const { codigoUsuario } = request;
+    await this.gerenciadorObjetivo.arquivar(codigoObjetivo, codigoUsuario);
   }
 
   @Get("/:codigoObjetivo/movimentacoes")

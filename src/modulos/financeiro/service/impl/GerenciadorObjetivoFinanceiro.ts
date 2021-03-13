@@ -27,6 +27,13 @@ export default class GerenciadorObjetivoFinanceiro implements IGerenciadorObjeti
     return this.objetivoRepository.salvar(objetivoPesquisado);
   }
 
+  public async arquivar(codigoObjetivo: number, codigoUsuario: number): Promise<void> {
+    let objetivoPesquisado = await this.objetivoRepository.pesquisarPeloCodigo(codigoObjetivo);
+    this.validarObjetivo(objetivoPesquisado, codigoUsuario);
+    objetivoPesquisado.arquivar();
+    this.objetivoRepository.salvar(objetivoPesquisado);
+  }
+
   private validarObjetivo(objetivo: IObjetivoFinanceiro, codigoUsuario: number): void {
     if (!objetivo)
       throw new EObjetivoNaoEncontradoException();
