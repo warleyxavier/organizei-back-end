@@ -19,7 +19,7 @@ export default class ObjetivoFinanceiroRepository implements IObjetivoFinanceiro
   }
 
   public pesquisarPeloUsuario(codigoUsuario: number): Promise<IObjetivoFinanceiro[]> {
-    return this.conexao.getGerenciador().find(ObjetivoFinanceiro, {where: {CodigoUsuario: codigoUsuario}, order: {Codigo: "ASC"}});
+    return this.conexao.getGerenciador().find(ObjetivoFinanceiro, {where: {CodigoUsuario: codigoUsuario, Arquivado: false}, order: {Codigo: "ASC"}});
   }
 
   public pesquisarPeloCodigo(codigo: number): Promise<IObjetivoFinanceiro> {

@@ -60,4 +60,8 @@ export default class ObjetivoFinanceiro implements IObjetivoFinanceiro {
     return this.CodigoUsuario == codigoUsuario;
   }
 
+  public arquivar(): void {
+    this.Arquivado = true;
+  }
+
 }
