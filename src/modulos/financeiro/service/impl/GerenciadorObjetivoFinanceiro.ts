@@ -7,9 +7,9 @@ import IObjetivoFinanceiroRepository from "../../repositories/IObjetivoFinanceir
 import ICriadorObjetivoFinanceiro from "../ICriadorObjetivoFinanceiro";
 import IGerenciadorObjetivoFinanceiro from "../IGerenciadorObjetivoFinanceiro";
 
-@Service({id: "financeiro.gerenciadorObjetivoFinanceiro", transient: true})
+@Service({ id: "financeiro.gerenciadorObjetivoFinanceiro", transient: true })
 export default class GerenciadorObjetivoFinanceiro implements IGerenciadorObjetivoFinanceiro {
-  
+
   @Inject("financeiro.objetivoFinanceiroRepository")
   private objetivoRepository: IObjetivoFinanceiroRepository;
 
@@ -20,19 +20,28 @@ export default class GerenciadorObjetivoFinanceiro implements IGerenciadorObjeti
     return this.criadorObjetivo.criar(objetivo, codigoUsuario);
   }
 
+  public async atualizar(objetivo: IObjetivoFinanceiro, codigoObjetivo: number, codigoUsuario: number): Promise<IObjetivoFinanceiro> {
+    let objetivoPesquisado = await this.objetivoRepository.pesquisarPeloCodigo(codigoObjetivo);
+    this.validarObjetivo(objetivoPesquisado, codigoUsuario);
+    objetivoPesquisado = {...objetivoPesquisado, ...objetivo};
+    return this.objetivoRepository.salvar(objetivoPesquisado);
+  }
+
+  private validarObjetivo(objetivo: IObjetivoFinanceiro, codigoUsuario: number): void {
+    if (!objetivo)
+      throw new EObjetivoNaoEncontradoException();
+
+    if (!objetivo.pertenceAoUsuario(codigoUsuario))
+      throw new EObjetivoNaoPertenceAoUsuarioException();
+  }
+
   public pesquisar(codigoUsuario: number): Promise<IObjetivoFinanceiro[]> {
     return this.objetivoRepository.pesquisarPeloUsuario(codigoUsuario);
   }
 
   public async pesquisarMovimentacoes(codigoObjetivo: number, codigoUsuario: number): Promise<IMovimentacaoObjetivo[]> {
     const objetivo = await this.objetivoRepository.pesquisarPeloCodigo(codigoObjetivo);
-
-    if (!objetivo)
-      throw new EObjetivoNaoEncontradoException();
-
-    if (!objetivo.pertenceAoUsuario(codigoUsuario))
-      throw new EObjetivoNaoPertenceAoUsuarioException();
-
+    this.validarObjetivo(objetivo, codigoUsuario);
     return this.objetivoRepository.pesquisarMovimentacoes(objetivo.Codigo);
   }
 
