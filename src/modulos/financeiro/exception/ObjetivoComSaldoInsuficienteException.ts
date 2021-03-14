@@ -1,4 +1,4 @@
-import { EBaseException } from "core/exception/BaseException";
+import { EBaseException } from "../../../core/exception/BaseException";
 
 export default class EObjetivoComSaldoInsuficienteException extends EBaseException {
   constructor() {

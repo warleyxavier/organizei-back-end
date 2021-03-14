@@ -4,5 +4,5 @@ import IMovimentacaoObjetivo from "../entities/IMovimentacaoObjetivo";
 import IObjetivoFinanceiro from "../entities/IObjetivoFinanceiro";
 
 export default interface IMovimentacaoFactory {
-  gerar(objetivo: IObjetivoFinanceiro, movimentacaoObjetivo: IMovimentacaoObjetivo, conta: IConta): IMovimentacao;
+  gerar(objetivo: IObjetivoFinanceiro, movimentacaoObjetivo: IMovimentacaoObjetivo, conta: IConta): Promise<IMovimentacao>;
 }

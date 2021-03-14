@@ -2,15 +2,13 @@ import { Service } from "typedi";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 import { TipoMovimentacaoObjetivo } from "../../enums/TipoMovimentacaoObjetivo";
-import ICategoria from "../ICategoria";
-import Categoria from "./Categoria";
 import IConta from "../IConta";
 import Conta from "./Conta";
 import IMovimentacaoObjetivo from "../IMovimentacaoObjetivo";
 
 const TipoMovimentacaoTransformer = {
   to: (value: TipoMovimentacaoObjetivo) => typeof value === 'number' ? value : TipoMovimentacaoObjetivo[value],
-  from: (value: number) => TipoMovimentacaoObjetivo[value]
+  from: (value: any) => typeof value === 'number' ? TipoMovimentacaoObjetivo[value] : TipoMovimentacaoObjetivo   
 }
 
 @Service({id: "movimentacaoObjetivo", transient: true})
@@ -26,15 +24,11 @@ export default class MovimentacaoObjetivo implements IMovimentacaoObjetivo {
   @Column({name: "valor"})
   Valor: number;
 
-  @Column({name: "data"})
+  @Column({name: "data", type: "date"})
   Data: Date;
 
   @Column({name: "objetivo_id"})
   CodigoObjetivo: number;
-
-  @JoinColumn({ name: "categoria_id", referencedColumnName: "Codigo" })
-  @ManyToOne<Categoria>(() => Categoria, { eager: true })
-  Categoria: ICategoria;
 
   @JoinColumn({ name: "conta_id", referencedColumnName: "Codigo" })
   @ManyToOne<Conta>(() => Conta, { eager: true })  

@@ -19,4 +19,5 @@ export default interface IObjetivoFinanceiro {
   pertenceAoUsuario(codigoUsuario: number): boolean;
   permiteResgateDeValor(valor: number): boolean;
   debitar(valor: number): void;
+  creditar(valor: number): void;
 }

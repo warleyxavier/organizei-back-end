@@ -52,7 +52,6 @@ export default class CriadorObjetivoFinanceiro implements ICriadorObjetivoFinanc
     movimentacao.Tipo = TipoMovimentacaoObjetivo.Deposito;
     movimentacao.Valor = objetivo.Saldo;
     movimentacao.Data = new Date();
-    movimentacao.Categoria = objetivo.CategoriaDeposito;
     await this.objetivoRepository.salvarMovimentacao(movimentacao);
   }
 
