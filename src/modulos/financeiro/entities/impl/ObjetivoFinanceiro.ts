@@ -21,7 +21,7 @@ export default class ObjetivoFinanceiro implements IObjetivoFinanceiro {
   ValorMeta: number;
 
   @Column({ name: "saldo" })
-  private saldo: number;
+  private saldo: number = 0;
 
   @Column({ name: "prazo" })
   Prazo: Date;
@@ -74,6 +74,10 @@ export default class ObjetivoFinanceiro implements IObjetivoFinanceiro {
 
   public debitar(valor: number): void {
     this.saldo = Number(this.Saldo) - Number(valor);
+  }
+
+  public creditar(valor: number): void {
+    this.saldo = Number(this.Saldo) + Number(valor);
   }
 
 }

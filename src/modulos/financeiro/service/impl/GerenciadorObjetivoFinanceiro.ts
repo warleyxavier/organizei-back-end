@@ -1,11 +1,13 @@
 import { Inject, Service } from "typedi";
 
 import { EObjetivoNaoEncontradoException, EObjetivoNaoPertenceAoUsuarioException, EObjetivoArquivadoException } from "../../exception";
+import { TipoMovimentacaoObjetivo } from "../../enums/TipoMovimentacaoObjetivo";
 import IMovimentacaoObjetivo from "../../entities/IMovimentacaoObjetivo";
 import IObjetivoFinanceiro from "../../entities/IObjetivoFinanceiro";
 import IObjetivoFinanceiroRepository from "../../repositories/IObjetivoFinanceiroRepository";
 import ICriadorObjetivoFinanceiro from "../ICriadorObjetivoFinanceiro";
 import IGerenciadorObjetivoFinanceiro from "../IGerenciadorObjetivoFinanceiro";
+import IProcessadorMovimentacaoObjetivo from "../IProcessadorMovimentacaoObjetivo";
 
 @Service({ id: "financeiro.gerenciadorObjetivoFinanceiro", transient: true })
 export default class GerenciadorObjetivoFinanceiro implements IGerenciadorObjetivoFinanceiro {
@@ -15,6 +17,9 @@ export default class GerenciadorObjetivoFinanceiro implements IGerenciadorObjeti
 
   @Inject("financeiro.criadorObjetivoFinanceiro")
   private criadorObjetivo: ICriadorObjetivoFinanceiro;
+
+  @Inject("financeiro.processadorMovimentacaoObjetivo")
+  private processadorMovimentacao: IProcessadorMovimentacaoObjetivo;
 
   public async criar(objetivo: IObjetivoFinanceiro, codigoUsuario: number): Promise<IObjetivoFinanceiro> {
     return this.criadorObjetivo.criar(objetivo, codigoUsuario);
@@ -58,6 +63,8 @@ export default class GerenciadorObjetivoFinanceiro implements IGerenciadorObjeti
   public async lancarMovimentacao(movimentacaoObjetivo: IMovimentacaoObjetivo, codigoObjetivo: number, codigoUsuario: number): Promise<IMovimentacaoObjetivo> {
     const objetivo = await this.objetivoRepository.pesquisarPeloCodigo(codigoObjetivo);
     this.validarObjetivo(objetivo, codigoUsuario);
+    movimentacaoObjetivo.Tipo = TipoMovimentacaoObjetivo.Resgate;
+    return this.processadorMovimentacao.processar(objetivo, movimentacaoObjetivo);
   }
 
 }

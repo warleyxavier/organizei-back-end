@@ -35,11 +35,6 @@ export class criacaoTabelaMovimentacoesObjetivos1615508189046 implements Migrati
                     isNullable: false,
                 },
                 {
-                    name: "categoria_id",
-                    type: "int",
-                    isNullable: false,
-                },
-                {
                     name: "conta_id",
                     type: "int",
                     isNullable: true
@@ -52,12 +47,6 @@ export class criacaoTabelaMovimentacoesObjetivos1615508189046 implements Migrati
                     referencedColumnNames: ["id"],
                     onDelete: "cascade",
                     onUpdate: "cascade"
-                },
-                {
-                    columnNames: ["categoria_id"],
-                    referencedTableName: "categorias",
-                    referencedColumnNames: ["id"],
-                    onUpdate: "cascade"                   
                 },
                 {
                     columnNames: ["conta_id"],

@@ -10,6 +10,7 @@ import MapeadorDeObjetivoFinanceiro from "../mapeadores/MapeadorDeObjetivoFinanc
 import MapeadorDeMovimentacaoObjetivo from "../mapeadores/MapeadorDeMovimentacaoObjetivo";
 import IGerenciadorObjetivoFinanceiro from "../service/IGerenciadorObjetivoFinanceiro";
 import ObjetivoFinanceiroParaAtualizacaoDto from "../dto/ObjetivoFinanceiroParaAtualizacaoDto";
+import MovimentacaoObjetivoParaInsercaoDto from "../dto/MovimentacaoObjetivoParaInsercaoDto";
 
 @JsonController("/objetivos")
 @UseBefore(AutenticacaoMiddleware)
@@ -63,6 +64,15 @@ export default class ObjetivoFinanceiroController {
     const { codigoUsuario } = request;
     const movimentacoes = await this.gerenciadorObjetivo.pesquisarMovimentacoes(codigoObjetivo, codigoUsuario);
     return this.mapeadorMovimentacao.paraListaDtos(movimentacoes);
+  }
+
+  @Post("/:codigoObjetivo/resgatar")
+  public async resgatar(@Req() request: any, @Param("codigoObjetivo") codigoObjetivo: number, @Body() dto: MovimentacaoObjetivoParaInsercaoDto): Promise<MovimentacaoObjetivoParaConsultaDto> {
+    const { codigoUsuario } = request;   
+    const movimentacao = this.mapeadorMovimentacao.paraEntidade(dto);
+    console.log(movimentacao);
+    const movimentacaoInserida = await this.gerenciadorObjetivo.lancarMovimentacao(movimentacao, codigoObjetivo, codigoUsuario);
+    return this.mapeadorMovimentacao.paraDto(movimentacaoInserida);
   }
 
 }
