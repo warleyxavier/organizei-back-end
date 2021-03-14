@@ -25,7 +25,6 @@ export default class MovimentacaoController {
   public async pesquisarMovimentacoesContaPadrao(@Req() request: any): Promise<MovimentacaoParaConsultaDto[]> {
     let { codigoUsuario } = request;
     const movimentacoes = await this.gerenciadorMovimentacoes.pesquisarMovimentacoesContaPadrao(codigoUsuario);
-    console.log(movimentacoes);
     return this.mapeadorDeMovimentacao.paraListaDto(movimentacoes);
   }
 
