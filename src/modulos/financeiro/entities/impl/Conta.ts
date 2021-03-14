@@ -37,4 +37,8 @@ export default class Conta implements IConta {
   public creditar(valor: number): void {
     this.saldo = Number(this.saldo) + Number(valor);
   }
+
+  public permiteDebitoDeValor(valor: number): boolean {
+    return (Number(this.saldo) - valor) >=0;
+  }
 }

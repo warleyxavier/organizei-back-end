@@ -20,10 +20,11 @@ export default class MapeadorDeMovimentacaoObjetivo {
     return entidades.map(entidade => this.paraDto(entidade));
   }
 
-  public paraEntidade(dto: MovimentacaoObjetivoParaInsercaoDto): IMovimentacaoObjetivo {
+  public paraEntidade(dto: MovimentacaoObjetivoParaInsercaoDto, tipo: TipoMovimentacaoObjetivo): IMovimentacaoObjetivo {
     let entidade = Container.get<IMovimentacaoObjetivo>("movimentacaoObjetivo");
     entidade.Data = dto.data;
     entidade.Valor = dto.valor;
+    entidade.Tipo = tipo;
     return entidade;
   }
 }

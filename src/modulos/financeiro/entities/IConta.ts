@@ -9,4 +9,6 @@ export default interface IConta {
 
   debitar(valor: number): void;
   creditar(valor: number): void;
+
+  permiteDebitoDeValor(valor: number): boolean;
 }

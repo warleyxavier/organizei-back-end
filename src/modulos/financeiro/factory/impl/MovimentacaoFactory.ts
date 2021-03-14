@@ -20,7 +20,7 @@ export default class MovimentacaoFactory implements IMovimentacaoFactory {
     movimentacao.Data = movimentacaoObjetivo.Data;
     movimentacao.Descricao = objetivo.Descricao;
     movimentacao.Valor = movimentacaoObjetivo.Valor;
-    movimentacao.Categoria = movimentacaoObjetivo.Tipo == TipoMovimentacaoObjetivo.Deposito ? objetivo.CategoriaDeposito : objetivo.CategoriaResgate;
+    movimentacao.Categoria = TipoMovimentacaoObjetivo.ehDeposito(movimentacaoObjetivo.Tipo) ? objetivo.CategoriaDeposito : objetivo.CategoriaResgate;
     movimentacao.Conta = conta;
 
     const maiorOrdem: any = await this.movimentacaoRepository.pesquisarMaiorOrdem(conta.Codigo);

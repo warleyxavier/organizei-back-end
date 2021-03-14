@@ -18,7 +18,7 @@
       "no-extra-boolean-cast": "error",
       "no-magic-numbers": ["error", {"ignore": [0.01,2,300,100,200,201,204,400,0,1,6]}],
       "no-multi-spaces": "error",
-      "no-redeclare": "error",
+      "no-redeclare": "off",
       "no-undef": "off",
       "no-unused-vars": "warn",
       "complexity": ["error", 5],

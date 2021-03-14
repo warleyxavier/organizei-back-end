@@ -23,7 +23,7 @@ export default class ObjetivoFinanceiro implements IObjetivoFinanceiro {
   @Column({ name: "saldo" })
   private saldo: number = 0;
 
-  @Column({ name: "prazo" })
+  @Column({ name: "prazo", type: "date" })
   Prazo: Date;
 
   @Column({ name: "arquivado" })

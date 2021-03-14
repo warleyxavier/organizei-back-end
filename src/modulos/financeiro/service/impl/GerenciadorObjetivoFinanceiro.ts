@@ -63,7 +63,6 @@ export default class GerenciadorObjetivoFinanceiro implements IGerenciadorObjeti
   public async lancarMovimentacao(movimentacaoObjetivo: IMovimentacaoObjetivo, codigoObjetivo: number, codigoUsuario: number): Promise<IMovimentacaoObjetivo> {
     const objetivo = await this.objetivoRepository.pesquisarPeloCodigo(codigoObjetivo);
     this.validarObjetivo(objetivo, codigoUsuario);
-    movimentacaoObjetivo.Tipo = TipoMovimentacaoObjetivo.Resgate;
     return this.processadorMovimentacao.processar(objetivo, movimentacaoObjetivo);
   }
 

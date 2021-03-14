@@ -1,17 +1,17 @@
 import { Inject, Service } from "typedi";
 
-import EObjetivoComSaldoInsuficienteException from "../../exception/ObjetivoComSaldoInsuficienteException";
+import { EContaComSaldoInsuficienteException, EObjetivoComSaldoInsuficienteException } from "../../exception";
 import { TipoMovimentacaoObjetivo } from "../../enums/TipoMovimentacaoObjetivo";
 import IConta from "../../entities/IConta";
 import IMovimentacaoObjetivo from "../../entities/IMovimentacaoObjetivo";
 import IObjetivoFinanceiro from "../../entities/IObjetivoFinanceiro";
+import IMovimentacao from "../../entities/IMovimentacao";
+import IMovimentacaoFactory from "../../factory/IMovimentacaoFactory";
 import IContaRepository from "../../repositories/IContaRepository";
+import IMovimentacaoRepository from "../../repositories/IMovimentacaoRepository";
+import IObjetivoFinanceiroRepository from "../../repositories/IObjetivoFinanceiroRepository";
 
 import IProcessadorMovimentacaoObjetivo from "../IProcessadorMovimentacaoObjetivo";
-import IObjetivoFinanceiroRepository from "modulos/financeiro/repositories/IObjetivoFinanceiroRepository";
-import IMovimentacaoFactory from "modulos/financeiro/factory/IMovimentacaoFactory";
-import IMovimentacaoRepository from "modulos/financeiro/repositories/IMovimentacaoRepository";
-import IMovimentacao from "modulos/financeiro/entities/IMovimentacao";
 
 @Service({id: "financeiro.processadorMovimentacaoObjetivo", transient: true})
 export default class ProcessadorMovimentacaoObjetivo implements IProcessadorMovimentacaoObjetivo {
@@ -32,7 +32,19 @@ export default class ProcessadorMovimentacaoObjetivo implements IProcessadorMovi
     let conta = await this.contaRepository.pesquisarContaPadrao(objetivo.CodigoUsuario);
     movimentacao.CodigoObjetivo = objetivo.Codigo;
     movimentacao.Conta = conta;
-    return this.resgatar(objetivo, movimentacao, conta);
+    return TipoMovimentacaoObjetivo.ehDeposito(movimentacao.Tipo) ? this.depositar(objetivo, movimentacao, conta) : this.resgatar(objetivo, movimentacao, conta);
+  }
+
+  private async depositar(objetivo: IObjetivoFinanceiro, movimentacao: IMovimentacaoObjetivo, conta: IConta): Promise<IMovimentacaoObjetivo> {
+    if (!conta.permiteDebitoDeValor(movimentacao.Valor))
+      throw new EContaComSaldoInsuficienteException();
+
+    const movimentacaoConta = await this.movimentacaoContaFactory.gerar(objetivo, movimentacao, conta);
+
+    objetivo.creditar(movimentacao.Valor);
+    conta.debitar(movimentacao.Valor);
+
+    return this.salvarDados(objetivo, movimentacao, conta, movimentacaoConta);
   }
 
   private async resgatar(objetivo: IObjetivoFinanceiro, movimentacao: IMovimentacaoObjetivo, conta: IConta): Promise<IMovimentacaoObjetivo> {
