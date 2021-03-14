@@ -11,6 +11,7 @@ import MapeadorDeMovimentacaoObjetivo from "../mapeadores/MapeadorDeMovimentacao
 import IGerenciadorObjetivoFinanceiro from "../service/IGerenciadorObjetivoFinanceiro";
 import ObjetivoFinanceiroParaAtualizacaoDto from "../dto/ObjetivoFinanceiroParaAtualizacaoDto";
 import MovimentacaoObjetivoParaInsercaoDto from "../dto/MovimentacaoObjetivoParaInsercaoDto";
+import { TipoMovimentacaoObjetivo } from "../enums/TipoMovimentacaoObjetivo";
 
 @JsonController("/objetivos")
 @UseBefore(AutenticacaoMiddleware)
@@ -25,7 +26,6 @@ export default class ObjetivoFinanceiroController {
     this.mapeadorObjetivo = new MapeadorDeObjetivoFinanceiro();
     this.mapeadorMovimentacao = new MapeadorDeMovimentacaoObjetivo();
   }
-
 
   @Post("/")
   @HttpCode(201)
@@ -69,8 +69,15 @@ export default class ObjetivoFinanceiroController {
   @Post("/:codigoObjetivo/resgatar")
   public async resgatar(@Req() request: any, @Param("codigoObjetivo") codigoObjetivo: number, @Body() dto: MovimentacaoObjetivoParaInsercaoDto): Promise<MovimentacaoObjetivoParaConsultaDto> {
     const { codigoUsuario } = request;   
-    const movimentacao = this.mapeadorMovimentacao.paraEntidade(dto);
-    console.log(movimentacao);
+    const movimentacao = this.mapeadorMovimentacao.paraEntidade(dto, TipoMovimentacaoObjetivo.Resgate);
+    const movimentacaoInserida = await this.gerenciadorObjetivo.lancarMovimentacao(movimentacao, codigoObjetivo, codigoUsuario);
+    return this.mapeadorMovimentacao.paraDto(movimentacaoInserida);
+  }
+
+  @Post("/:codigoObjetivo/depositar")
+  public async depositar(@Req() request: any, @Param("codigoObjetivo") codigoObjetivo: number, @Body() dto: MovimentacaoObjetivoParaInsercaoDto): Promise<MovimentacaoObjetivoParaConsultaDto> {
+    const { codigoUsuario } = request;   
+    const movimentacao = this.mapeadorMovimentacao.paraEntidade(dto, TipoMovimentacaoObjetivo.Deposito);
     const movimentacaoInserida = await this.gerenciadorObjetivo.lancarMovimentacao(movimentacao, codigoObjetivo, codigoUsuario);
     return this.mapeadorMovimentacao.paraDto(movimentacaoInserida);
   }

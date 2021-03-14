@@ -18,7 +18,7 @@ export default class MovimentacaoObjetivo implements IMovimentacaoObjetivo {
   @PrimaryGeneratedColumn({name: "id"})
   Codigo: number;
 
-  @Column({name: "tipo", enum: TipoMovimentacaoObjetivo, transformer: TipoMovimentacaoTransformer})
+  @Column({name: "tipo", transformer: TipoMovimentacaoTransformer})
   Tipo: TipoMovimentacaoObjetivo;
 
   @Column({name: "valor"})
