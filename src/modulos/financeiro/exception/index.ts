@@ -4,3 +4,4 @@ export { EMovimentacaoNaoEncontradaException } from "./MovimentacaoNaoEncontrada
 export { EMovimentacaoNaoPertenceAoUsuarioException } from "./MovimentacaoNaoPertenceAoUsuarioException";
 export { EObjetivoNaoEncontradoException } from "./ObjetivoNaoEncontradoException";
 export { EObjetivoNaoPertenceAoUsuarioException } from "./ObjetivoNaoPertenceAoUsuarioException";
+export { EObjetivoArquivadoException } from "./ObjetivoArquivadoException";

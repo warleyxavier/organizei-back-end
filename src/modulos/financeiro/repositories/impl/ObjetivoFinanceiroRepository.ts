@@ -31,7 +31,7 @@ export default class ObjetivoFinanceiroRepository implements IObjetivoFinanceiro
   }
 
   public pesquisarMovimentacoes(codigoObjetivo: number): Promise<IMovimentacaoObjetivo[]> {
-    return this.conexao.getGerenciador().find(MovimentacaoObjetivo, {where: {CodigoObjetivo: codigoObjetivo}, order: {Data: "ASC"}});
+    return this.conexao.getGerenciador().find(MovimentacaoObjetivo, {where: {CodigoObjetivo: codigoObjetivo}, order: {Codigo: "ASC"}});
   }
 
 }

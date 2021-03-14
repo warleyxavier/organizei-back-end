@@ -12,7 +12,7 @@ export default class MapeadorDeObjetivoFinanceiro {
     entidade.Descricao = dto.descricao;
     entidade.Prazo = dto.prazo;
     entidade.ValorMeta = dto.valorMeta || 0;
-    entidade.Saldo = dto.saldoInicial || 0;
+    entidade.creditar(dto.saldoInicial || 0);
     return entidade;
   }
 

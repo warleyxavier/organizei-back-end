@@ -2,7 +2,7 @@ import { TipoMovimentacaoObjetivo } from "../enums/TipoMovimentacaoObjetivo";
 
 export default class MovimentacaoObjetivoParaConsultaDto {
   codigo: number;
-  Tipo: TipoMovimentacaoObjetivo;
+  Tipo: string;
   Valor: number;
   Data: string;
 }

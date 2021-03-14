@@ -10,7 +10,6 @@ export default interface IMovimentacaoObjetivo {
 
   CodigoObjetivo: number;
 
-  Categoria: ICategoria;
   Conta: IConta;
 
 }
