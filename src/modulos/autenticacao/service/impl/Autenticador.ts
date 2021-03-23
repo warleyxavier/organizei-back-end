@@ -27,7 +27,7 @@ export default class Autenticador implements IAutenticador {
 
     const accessToken: string = this.geradorAccessToken.gerar(usuario.Codigo);
 
-    return new AccessToken(accessToken);
+    return new AccessToken(accessToken, usuario.NomeCompleto, usuario.EMail);
   }
 
 }
