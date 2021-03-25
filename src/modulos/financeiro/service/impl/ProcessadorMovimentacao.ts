@@ -1,5 +1,7 @@
 import { Inject, Service } from "typedi";
 
+import { Transaction } from "../../../../core/decorators/Transaction";
+
 import { EContaComSaldoInsuficienteException } from "../../exception";
 import IConta from "../../entities/IConta";
 import IMovimentacao from "../../entities/IMovimentacao";
@@ -16,6 +18,7 @@ export default class ProcessadorMovimentacao implements IProcessadorMovimentacao
   @Inject("financeiro.movimentacaoRepository")
   private movimentacaoRepository: IMovimentacaoRepository;
 
+  @Transaction()
   public async processar(movimentacao: IMovimentacao): Promise<IMovimentacao> {
     let conta = movimentacao.Conta;
 
@@ -41,6 +44,7 @@ export default class ProcessadorMovimentacao implements IProcessadorMovimentacao
     throw new EContaComSaldoInsuficienteException();
   }
 
+  @Transaction()
   public async excluir(movimentacao: IMovimentacao): Promise<void> {
     let conta = movimentacao.Conta;
     movimentacao.Categoria.ehDespesa() ? conta.creditar(movimentacao.Valor) : conta.debitar(movimentacao.Valor);

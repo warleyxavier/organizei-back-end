@@ -1,5 +1,7 @@
 import { Inject, Service } from "typedi";
 
+import { Transaction } from "../../../../core/decorators/Transaction";
+
 import { EContaComSaldoInsuficienteException, EObjetivoComSaldoInsuficienteException } from "../../exception";
 import { TipoMovimentacaoObjetivo } from "../../enums/TipoMovimentacaoObjetivo";
 import IConta from "../../entities/IConta";
@@ -28,6 +30,7 @@ export default class ProcessadorMovimentacaoObjetivo implements IProcessadorMovi
   @Inject("financeiro.movimentacaoFactory")
   private movimentacaoContaFactory: IMovimentacaoFactory;
 
+  @Transaction()
   public async processar(objetivo: IObjetivoFinanceiro, movimentacao: IMovimentacaoObjetivo): Promise<IMovimentacaoObjetivo> {
     let conta = await this.contaRepository.pesquisarContaPadrao(objetivo.CodigoUsuario);
     movimentacao.CodigoObjetivo = objetivo.Codigo;

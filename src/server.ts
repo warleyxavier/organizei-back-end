@@ -2,13 +2,13 @@ require("dotenv").config();
 
 import "reflect-metadata";
 
-import "./core/config/InjectImports";
-
 import app from "./core/config/ServidorHTTP";
 import conectorBancoDados from "./core/config/ConfiguradorConexaoBancoDados";
 
 async function bootstrap() {
     await conectorBancoDados();
+    require("./core/config/InjectImports");
+
     console.log("Conexão estabelecida com o banco de dados <3 ...")
 
     const PORTA_PADRAO: number = 3000;

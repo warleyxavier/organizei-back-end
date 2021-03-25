@@ -1,5 +1,7 @@
 import { Inject, Service } from "typedi";
 
+import { Transaction } from "../../../../core/decorators/Transaction";
+
 import IUsuario from "../../entities/IUsuario";
 
 import IAcaoPosRegistroUsuarioCommand from "../../commands/IAcaoPosRegistroUsuarioCommand";
@@ -19,7 +21,8 @@ export default class RegistradorDeUsuario implements IRegistradorDeUsuario{
     this.acoesPosRegistro.push(acao);
   }
 
-  public async registrar(usuario: IUsuario): Promise<void> {      
+  @Transaction()
+  public async registrar(usuario: IUsuario): Promise<void> {    
     await this.validarSeUsuarioJaEstaRegistrado(usuario.EMail);
     const usuarioSalvo = await this.usuarioRepository.inserir(usuario);  
     await this.executarAcoesPosRegistro(usuarioSalvo);
@@ -35,7 +38,7 @@ export default class RegistradorDeUsuario implements IRegistradorDeUsuario{
   }
 
   private async executarAcoesPosRegistro(usuario: IUsuario): Promise<void> {
-    this.acoesPosRegistro.forEach(acao => acao.executar(usuario));
+    await this.acoesPosRegistro.forEach(async acao => await acao.executar(usuario));
   }
 
 }
