@@ -13,7 +13,7 @@ export default class CriadorCategoriaReceitaUsuarioCommand implements IAcaoPosRe
   @Inject("financeiro.categoriaRepository")
   private categoriaRepository: ICategoriaRepository;
   
-  public executar(usuario: IUsuario): void {
+  public async executar(usuario: IUsuario): Promise<void> {
     let categoria = Container.get<ICategoria>("categoria");
     categoria.Nome = 'Receita';
     categoria.Tipo = TipoCategoria.Receita;

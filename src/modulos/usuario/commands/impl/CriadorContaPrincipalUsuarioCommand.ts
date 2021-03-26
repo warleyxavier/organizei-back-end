@@ -12,7 +12,7 @@ export default class CriadorContaPrincipalUsuarioCommand implements IAcaoPosRegi
   @Inject("financeiro.contaRepository")
   private contaRepository: IContaRepository;
 
-  public executar(usuario: IUsuario): void {
+  public async executar(usuario: IUsuario): Promise<void> {
     let conta = Container.get<IConta>("conta");
     conta.Nome = "Conta Principal";
     conta.EhPadrao = true;

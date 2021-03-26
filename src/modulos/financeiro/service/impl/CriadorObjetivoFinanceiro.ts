@@ -1,5 +1,7 @@
 import Container, { Inject, Service } from "typedi";
 
+import { Transaction } from "../../../../core/decorators/Transaction";
+
 import IUsuarioRepository from "../../../usuario/repository/IUsuarioRepository";
 
 import { TipoCategoria } from "../../enums/TipoCategoria";
@@ -23,6 +25,7 @@ export default class CriadorObjetivoFinanceiro implements ICriadorObjetivoFinanc
   @Inject("financeiro.objetivoFinanceiroRepository")
   private objetivoRepository: IObjetivoFinanceiroRepository;
   
+  @Transaction()
   public async criar(objetivo: IObjetivoFinanceiro, codigoUsuario: number): Promise<IObjetivoFinanceiro> {
     const categoriaDeDespesa = this.gerarCategoria(objetivo.Descricao, TipoCategoria.Despesa);
     const categoriaDeReceita = this.gerarCategoria(objetivo.Descricao, TipoCategoria.Receita);

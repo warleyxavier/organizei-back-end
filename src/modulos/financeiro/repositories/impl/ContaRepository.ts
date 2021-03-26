@@ -20,7 +20,7 @@ export default class ContaRepository implements IContaRepository {
   }
   
   public async inserir(conta: IConta): Promise<void> {
-    await this.conexao.getGerenciador().insert(Conta, conta);
+    this.conexao.getGerenciador().insert(Conta, conta);
   }
   
   public salvar(conta: IConta): Promise<IConta> {

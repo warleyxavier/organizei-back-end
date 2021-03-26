@@ -41,7 +41,7 @@ export default class CategoriaRepository implements ICategoriaRepository {
     .getOne();
   }
   
-  public salvar(categoria: ICategoria): Promise<ICategoria> {
+  public async salvar(categoria: ICategoria): Promise<ICategoria> {
     return this.conexao.getGerenciador().save(Categoria, categoria);
   }
 

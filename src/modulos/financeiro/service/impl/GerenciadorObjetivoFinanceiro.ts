@@ -1,7 +1,6 @@
 import { Inject, Service } from "typedi";
 
 import { EObjetivoNaoEncontradoException, EObjetivoNaoPertenceAoUsuarioException, EObjetivoArquivadoException } from "../../exception";
-import { TipoMovimentacaoObjetivo } from "../../enums/TipoMovimentacaoObjetivo";
 import IMovimentacaoObjetivo from "../../entities/IMovimentacaoObjetivo";
 import IObjetivoFinanceiro from "../../entities/IObjetivoFinanceiro";
 import IObjetivoFinanceiroRepository from "../../repositories/IObjetivoFinanceiroRepository";
