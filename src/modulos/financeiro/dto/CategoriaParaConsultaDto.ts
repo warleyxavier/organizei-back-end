@@ -4,6 +4,6 @@ export default class CategoriaParaConsultaDto {
   codigo: number;
   nome: string;
   valorPrevisto: number;
-  porcentegmPrevista: number;
+  porcentagemPrevista: number;
   tipo: TipoCategoria;
 }
