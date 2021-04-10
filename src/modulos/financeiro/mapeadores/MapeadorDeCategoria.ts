@@ -27,7 +27,7 @@ export default class MapeadorDeCategoria {
     dto.codigo = categoria.Codigo;
     dto.nome = categoria.Nome;
     dto.valorPrevisto = categoria.ValorPrevisto;
-    dto.porcentegmPrevista = categoria.PorcentagemPrevista;
+    dto.porcentagemPrevista = categoria.PorcentagemPrevista;
     dto.tipo = categoria.Tipo;
     return dto;
   }
