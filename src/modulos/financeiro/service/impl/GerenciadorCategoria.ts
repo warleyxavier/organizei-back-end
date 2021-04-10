@@ -25,6 +25,12 @@ export default class GerenciadorCategoria implements IGerenciadorCategoria {
     return this.categoriaRepository.pesquisarCategoriasDeDespesa(codigoUsuario);
   }
 
+  public async pesquisarPeloCodigo(codigoUsuario: number, codigoCategoria: number): Promise<ICategoria> {
+    var categoria = await this.categoriaRepository.pesquisarPeloCodigo(codigoCategoria);
+    this.validarDadosDaCategoria(categoria, codigoUsuario);
+    return categoria;
+  }
+
   public async criar(categoria: ICategoria, codigoUsuario: number): Promise<ICategoria> {
     const usuario = await this.usuarioRepository.pesquisarPorCodigo(codigoUsuario);
     categoria.Usuario = usuario;

@@ -52,6 +52,13 @@ export default class CategoriaController {
     return this.mapeadorDeCategoria.paraListaDto(categorias);
   }
 
+  @Get("/:codigoCategoria")
+  public async pesquisarCategoriaPeloCodigo(@Req() request: any, @Param("codigoCategoria") codigoCategoria: number): Promise<CategoriaParaConsultaDto> {
+    let { codigoUsuario } = request;  
+    const categoria = await this.gerenciadorCategoria.pesquisarPeloCodigo(codigoUsuario, codigoCategoria);
+    return this.mapeadorDeCategoria.paraDto(categoria); 
+  }
+
   @Delete("/:codigoCategoria")
   public async excluir(@Req() request: any, @Param("codigoCategoria") codigoCategoria: number): Promise<void> {
     let { codigoUsuario } = request;
